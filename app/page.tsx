@@ -156,9 +156,16 @@ export default function Home() {
             >
               Security
             </a>
-            <span className="rounded-full border border-gold/60 bg-gold/10 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-gold">
-              Coming Soon
-            </span>
+            <a
+              href="#notify"
+              className="flex items-center gap-2.5 rounded-full bg-gold py-2 pl-4 pr-5 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-pine-deep shadow-lg shadow-gold/20 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-gold/30"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pine-deep/40" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-pine-deep" />
+              </span>
+              Coming soon
+            </a>
           </div>
         </div>
       </nav>
@@ -166,7 +173,6 @@ export default function Home() {
       {/* ---------- hero ---------- */}
       <header className="px-6 pb-20 pt-24 text-center">
         <div className="mx-auto max-w-6xl">
-          <span className="eyebrow">The operating system for Greek life</span>
           <h1 className="mx-auto mb-5 max-w-[14ch] font-slab text-5xl leading-[1.05] md:text-7xl">
             Run your chapter from your{" "}
             <span className="bg-gradient-to-r from-gold to-gold/85 bg-clip-text text-transparent">
@@ -189,7 +195,6 @@ export default function Home() {
       <div className="battlement flip" aria-hidden="true" />
       <section id="features" className="bg-cream px-6 py-24 text-pine">
         <div className="mx-auto max-w-6xl">
-          <span className="eyebrow !text-pine-soft before:!bg-pine-soft">Capabilities</span>
           <h2 className="mb-4 max-w-[20ch] font-slab text-3xl md:text-5xl">
             Everything a chapter runs on. Nothing it doesn&apos;t.
           </h2>
@@ -220,15 +225,11 @@ export default function Home() {
       {/* ---------- roles ---------- */}
       <section className="px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <span className="eyebrow">Built on structure</span>
           <h2 className="mb-4 font-slab text-3xl md:text-5xl">Your hierarchy. Your rules.</h2>
-          <p className="mb-3 max-w-2xl text-lg text-sage">
+          <p className="mb-12 max-w-2xl text-lg text-sage">
             No two chapters run the same way — so nothing here is hardcoded. Create your own
             roles, name them whatever your house calls them, and decide exactly what each one can
             see and do.
-          </p>
-          <p className="mb-12 font-mono text-xs uppercase tracking-[0.12em] text-gold">
-            Starter roles — rename or replace all of them
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {roles.map((r, i) => (
@@ -262,7 +263,6 @@ export default function Home() {
       <section id="security" className="bg-pine-deep px-6 py-24">
         <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <span className="eyebrow">Trust &amp; privacy</span>
             <h2 className="mb-5 font-slab text-3xl md:text-5xl">
               Trust isn&apos;t a feature. It&apos;s the foundation.
             </h2>
@@ -303,9 +303,6 @@ export default function Home() {
       <div className="battlement-gold flip" aria-hidden="true" />
       <section id="notify" className="bg-cream px-6 py-24 text-center text-pine">
         <div className="mx-auto max-w-6xl">
-          <span className="eyebrow !text-pine-soft before:!bg-pine-soft justify-center">
-            Launching 2026
-          </span>
           <h2 className="mb-4 font-slab text-4xl md:text-6xl">
             Your chapter&apos;s new HQ is almost here.
           </h2>
@@ -325,9 +322,7 @@ export default function Home() {
             <Image src="/logo-mark.png" alt="" width={34} height={28} className="h-7 w-auto" />
             <span className="font-mono text-xs font-medium uppercase tracking-[0.22em]">Chapter Room</span>
           </div>
-          <small className="text-[13px] text-sage">
-            © 2026 Chapter Room · Built for chapters, by chapter people.
-          </small>
+          <small className="text-[13px] text-sage">© 2026 Chapter Room</small>
         </div>
       </footer>
     </main>

@@ -12,14 +12,6 @@ html {
 }
 
 @layer components {
-  .eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.18em] text-gold inline-flex items-center gap-2.5 mb-3.5;
-  }
-  .eyebrow::before {
-    content: "";
-    @apply w-6 h-0.5 bg-gold;
-  }
-
   .battlement {
     height: 22px;
     background: repeating-linear-gradient(90deg, #f4ecda 0 34px, transparent 34px 62px);
