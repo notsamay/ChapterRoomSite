@@ -2,49 +2,170 @@
 @tailwind components;
 @tailwind utilities;
 
-::selection {
-  background: #c9a24b;
-  color: #142720;
+/* ── Fontshare faces ────────────────────────────────────────────────────────
+   Cabinet Grotesk and General Sans aren't on Google Fonts, so they come from
+   Fontshare's CDN (linked in app/layout.tsx). Bricolage Grotesque is loaded and
+   self-hosted by next/font as --font-bricolage. */
+
+:root {
+  /* The phone-mock unit. Overridden inside .phone-ui; 1px everywhere else so the
+     u-* utilities degrade to plain pixels outside a phone frame. */
+  --u: 1px;
+  /* Height of the fixed nav band (16px padding + 64px pill + 16px). The hero pads by
+     this so the gradient can run behind the pill without content hiding under it. */
+  --nav-h: 96px;
+  color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
+  /* Keep anchor targets clear of the fixed nav. */
+  scroll-padding-top: calc(var(--nav-h) + 8px);
+  background: #123a2e;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #4e7a54;
+  color: #f6f2e9;
+}
+
+:focus-visible {
+  outline: 2px solid #4e7a54;
+  outline-offset: 4px;
+}
+
+/* A state's focus is shown by its own highlighted outline (see ColonyMap), never a
+   rectangle drawn around an irregular shape — not the focus ring, and not the
+   grey tap highlight touch browsers paint on click either. */
+.map-state,
+.map-pin {
+  -webkit-tap-highlight-color: transparent;
+}
+.map-state:focus,
+.map-state:focus-visible {
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(246, 242, 233, 0.45);
 }
 
 @layer components {
-  .battlement {
-    height: 22px;
-    background: repeating-linear-gradient(90deg, #f4ecda 0 34px, transparent 34px 62px);
+  /* ── Phone frames ─────────────────────────────────────────────────────────
+     Every dimension is a container-query unit, so one definition holds its
+     proportions at any rendered width — bezel radius, padding and notch all track
+     the phone instead of being pinned to a breakpoint.
+
+     `.phone` exists purely to be that container: container-query units resolve
+     against an element's nearest *ancestor* container, never against the element
+     itself, so a frame that declared its own container would size its padding
+     against the viewport. */
+  .phone {
+    container-type: inline-size;
+    width: 100%;
+    flex: none;
   }
-  .battlement-pine {
-    height: 22px;
-    background: repeating-linear-gradient(90deg, #1c362d 0 34px, transparent 34px 62px);
+
+  .phone-frame {
+    position: relative;
+    width: 100%;
+    background: #0b120e;
+    border-radius: 16.3cqw;
+    /* Whole-pixel bezel so the screen inside is a whole number of pixels and the screenshot
+       maps 1:1 onto it (see components/phone-geometry.mjs). Older browsers without round()
+       fall back to the fractional value. */
+    padding: 3.55cqw;
+    padding: round(3.55cqw, 1px);
   }
-  .battlement-gold {
-    height: 22px;
-    background: repeating-linear-gradient(90deg, #c9a24b 0 34px, transparent 34px 62px);
+  .phone-frame-crop-top {
+    border-radius: 16.9cqw 16.9cqw 0 0;
+    padding: 3.85cqw 3.85cqw 0;
+    padding: round(3.85cqw, 1px) round(3.85cqw, 1px) 0;
   }
-  .flip {
-    transform: scaleY(-1);
+
+  .phone-screen {
+    container-type: inline-size;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 12.75cqw;
+  }
+  .phone-frame-crop-top .phone-screen {
+    border-radius: 13.05cqw 13.05cqw 0 0;
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 7.65cqw;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 29.9cqw;
+    height: 8.1cqw;
+    border-radius: 99px;
+    background: inherit;
+    z-index: 3;
+  }
+
+  /* The mock's own coordinate space: authored against a 300px-wide screen. */
+  .phone-ui {
+    --u: calc(100cqw / 300);
+    width: 100%;
+    height: 100%;
+    font-family: "General Sans", ui-sans-serif, system-ui, sans-serif;
+    color: #f6f2e9;
+  }
+
+  /* Horizontal phone carousels on small screens. */
+  .rail {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+  .rail > * {
+    scroll-snap-align: center;
   }
 }
 
+/* ── Scroll reveal ──────────────────────────────────────────────────────────
+   Elements start shifted and fade up as they enter. The transition matches the
+   prototype's easing so the page keeps its cadence. */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(var(--reveal-y, 28px));
+  transition:
+    opacity var(--reveal-duration, 0.9s) cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s),
+    transform var(--reveal-duration, 0.9s) cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s);
+  will-change: opacity, transform;
 }
-.reveal.in {
+.reveal.is-visible {
   opacity: 1;
   transform: none;
+  /* Drop the layer hint once the reveal has run, so screenshots inside are painted
+     at full resolution instead of from a cached composited texture. */
+  will-change: auto;
 }
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .reveal {
     opacity: 1;
     transform: none;
     transition: none;
   }
-  html {
-    scroll-behavior: auto;
+  .animate-float,
+  .animate-pulse-soft {
+    animation: none !important;
   }
 }

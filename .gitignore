@@ -2,5 +2,9 @@ node_modules
 .next
 out
 .env*
+!.env.example
 
 *.tsbuildinfo
+
+# Raw screenshot drops; the site uses public/screens/
+*.zip
