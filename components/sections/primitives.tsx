@@ -26,14 +26,16 @@ export function PhoneSlot({
   children,
   max,
   railWidth = 240,
+  className = "",
 }: {
   children: ReactNode;
   max: number;
   railWidth?: number;
+  className?: string;
 }) {
   return (
     <div
-      className="w-[var(--rail-w)] shrink-0 md:w-full md:min-w-0 md:max-w-[var(--slot-max)] md:flex-1"
+      className={`w-[var(--rail-w)] shrink-0 md:w-full md:min-w-0 md:max-w-[var(--slot-max)] md:flex-1 ${className}`}
       style={{ ["--rail-w" as string]: `${railWidth}px`, ["--slot-max" as string]: `${max}px` }}
     >
       {children}

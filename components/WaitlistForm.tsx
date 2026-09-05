@@ -22,6 +22,7 @@ export default function WaitlistForm() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           email: data.get("email"),
+          phone: data.get("phone"),
           chapter: data.get("chapter"),
           company: data.get("company"),
         }),
@@ -48,7 +49,7 @@ export default function WaitlistForm() {
         </span>
         <p className="text-[19px] font-semibold">You&rsquo;re on the list.</p>
         <p className="text-[15px] leading-relaxed text-cream/65">
-          We&rsquo;ll reach out from an @chapterroom.app address ahead of the spring 2027 launch.
+          We&rsquo;ll reach out from an @joinchapterroom.com address ahead of the spring 2027 launch.
         </p>
       </div>
     );
@@ -72,8 +73,23 @@ export default function WaitlistForm() {
         className={FIELD}
       />
 
+      <label htmlFor="waitlist-phone" className="sr-only">
+        Contact phone number
+      </label>
+      <input
+        id="waitlist-phone"
+        name="phone"
+        type="tel"
+        required
+        autoComplete="tel"
+        inputMode="tel"
+        disabled={sending}
+        placeholder="Phone number"
+        className={FIELD}
+      />
+
       <label htmlFor="waitlist-chapter" className="sr-only">
-        Chapter and school
+        Chapter
       </label>
       <input
         id="waitlist-chapter"
@@ -82,7 +98,7 @@ export default function WaitlistForm() {
         required
         autoComplete="organization"
         disabled={sending}
-        placeholder="Chapter and school"
+        placeholder="Chapter"
         className={FIELD}
       />
 

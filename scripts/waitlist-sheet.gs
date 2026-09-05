@@ -6,14 +6,14 @@
  * /exec URL as WAITLIST_WEBHOOK_URL on the site.
  *
  * Each signup POSTed by app/api/waitlist/route.ts becomes one row:
- *   Submitted at | Email | Chapter | Source
+ *   Submitted at | Email | Phone | Chapter | Source
  *
  * Duplicate emails are still appended, with "duplicate" in the Source column, so you can
  * see repeat interest without losing the original row.
  */
 
 var SHEET_NAME = "Waitlist";
-var HEADERS = ["Submitted at", "Email", "Chapter", "Source"];
+var HEADERS = ["Submitted at", "Email", "Phone", "Chapter", "Source"];
 
 function doPost(e) {
   var data;
@@ -24,6 +24,7 @@ function doPost(e) {
   }
 
   var email = String(data.email || "").trim().toLowerCase();
+  var phone = String(data.phone || "").trim();
   var chapter = String(data.chapter || "").trim();
   if (!email || !chapter) {
     return respond({ ok: false, error: "email and chapter are required." });
@@ -35,7 +36,7 @@ function doPost(e) {
     var sheet = getSheet();
     var source = isDuplicate(sheet, email) ? "duplicate" : "site";
     var submittedAt = data.submittedAt ? new Date(data.submittedAt) : new Date();
-    sheet.appendRow([submittedAt, email, chapter, source]);
+    sheet.appendRow([submittedAt, email, "'" + phone, chapter, source]);
   } finally {
     lock.releaseLock();
   }
@@ -56,13 +57,19 @@ function getSheet() {
   }
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(HEADERS);
-    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight("bold");
     sheet.setFrozenRows(1);
     sheet.getRange("A:A").setNumberFormat("yyyy-mm-dd hh:mm");
     sheet.setColumnWidth(1, 150);
     sheet.setColumnWidth(2, 260);
-    sheet.setColumnWidth(3, 320);
+    sheet.setColumnWidth(3, 150);
+    sheet.setColumnWidth(4, 320);
   }
+  // Rewrite the header row whenever the columns change, so an existing tab keeps up.
+  var header = sheet.getRange(1, 1, 1, HEADERS.length);
+  if (header.getValues()[0].join("|") !== HEADERS.join("|")) {
+    header.setValues([HEADERS]);
+  }
+  header.setFontWeight("bold");
   return sheet;
 }
 

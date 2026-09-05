@@ -11,7 +11,7 @@ import { NextResponse } from "next/server";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-type Payload = { email?: unknown; chapter?: unknown; company?: unknown };
+type Payload = { email?: unknown; phone?: unknown; chapter?: unknown; company?: unknown };
 
 export async function POST(request: Request) {
   let body: Payload;
@@ -27,16 +27,22 @@ export async function POST(request: Request) {
   }
 
   const email = typeof body.email === "string" ? body.email.trim() : "";
+  const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const chapter = typeof body.chapter === "string" ? body.chapter.trim() : "";
+  // Keep whatever formatting they typed, but make sure there is a real number in it.
+  const digits = phone.replace(/\D/g, "");
 
   if (!EMAIL.test(email) || email.length > 254) {
     return NextResponse.json({ error: "That email doesn't look right." }, { status: 422 });
   }
+  if (digits.length < 10 || digits.length > 15 || phone.length > 32) {
+    return NextResponse.json({ error: "That phone number doesn't look right." }, { status: 422 });
+  }
   if (chapter.length < 2 || chapter.length > 160) {
-    return NextResponse.json({ error: "Tell us your chapter and school." }, { status: 422 });
+    return NextResponse.json({ error: "Tell us your chapter." }, { status: 422 });
   }
 
-  const signup = { email, chapter, submittedAt: new Date().toISOString() };
+  const signup = { email, phone, chapter, submittedAt: new Date().toISOString() };
   const webhook = process.env.WAITLIST_WEBHOOK_URL;
 
   if (!webhook) {
@@ -52,7 +58,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        text: `New Chapter Room waitlist signup: ${chapter} — ${email}`,
+        text: `New Chapter Room waitlist signup: ${chapter} — ${email} — ${phone}`,
         ...signup,
       }),
     });

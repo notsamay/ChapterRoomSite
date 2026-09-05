@@ -18,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://chapterroom.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://joinchapterroom.com";
 
 const description =
   "Attendance, dues, announcements, chats, albums and vouchers. Everything your chapter runs on, in one app that actually looks good. Launching spring 2027 on iOS and Android.";
@@ -75,7 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700&f[]=general-sans@400,500,600&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,600&f[]=general-sans@400,500,600&display=swap"
         />
       </head>
       <body className="bg-pine font-sans text-cream antialiased">{children}</body>

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export function Wordmark({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`truncate font-wordmark text-[18px] font-bold leading-none tracking-[-0.035em] text-cream ${className}`}
+      className={`truncate font-head text-[19px] font-semibold leading-none tracking-[-0.03em] text-cream ${className}`}
     >
       chapter room
     </span>
@@ -15,10 +15,10 @@ export function Wordmark({ className = "" }: { className?: string }) {
 }
 
 const LINKS = [
-  { href: "#attendance", label: "Attendance" },
-  { href: "#roles", label: "Roles" },
-  { href: "#chats", label: "Chats" },
+  { href: "#chats", label: "Communication" },
+  { href: "#features", label: "Essentials" },
   { href: "#locked", label: "Privacy" },
+  { href: "#organization", label: "Organization" },
 ];
 
 export default function SiteNav() {
@@ -62,7 +62,7 @@ export default function SiteNav() {
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-[80] flex justify-center px-5 py-4">
       <div className="pointer-events-auto w-full max-w-nav">
-        <div className="flex items-center justify-between gap-3 rounded-full border border-cream/15 bg-ink/60 py-2.5 pl-3.5 pr-2.5 backdrop-blur-[18px] backdrop-saturate-150 min-[900px]:gap-[18px] min-[900px]:pl-[18px] min-[900px]:pr-3">
+        <div className="flex items-center justify-between gap-3 rounded-full border border-cream/15 bg-ink/60 py-2.5 pl-5 pr-2.5 backdrop-blur-[18px] backdrop-saturate-150 min-[900px]:gap-[18px] min-[900px]:pl-[26px] min-[900px]:pr-3">
           <a href="#top" className="flex min-w-0 items-center gap-2" aria-label="Chapter Room, back to top">
             <Image src="/logo-mark.png" alt="" width={34} height={28} className="h-[28px] w-auto" priority />
             <Wordmark className="translate-y-px" />

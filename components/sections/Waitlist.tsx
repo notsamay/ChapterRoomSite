@@ -1,14 +1,17 @@
 import Reveal from "@/components/Reveal";
+import Spotlight from "@/components/Spotlight";
 import WaitlistForm from "@/components/WaitlistForm";
 
 export default function Waitlist() {
   return (
     <section
       id="waitlist"
+      className="grain relative overflow-hidden"
       style={{ background: "radial-gradient(120% 100% at 50% 0%, #1B5340 0%, #123A2E 60%, #0B241C 100%)" }}
     >
-      <div className="mx-auto max-w-[820px] px-6 pb-[clamp(76px,9vw,120px)] pt-[clamp(80px,10vw,130px)] text-center">
-        <Reveal>
+      <Spotlight />
+      <div className="relative z-10 mx-auto max-w-[820px] px-6 pb-[clamp(76px,9vw,120px)] pt-[clamp(80px,10vw,130px)] text-center">
+        <Reveal from="blur">
           <h2 className="mx-auto mb-6 text-balance font-display text-[clamp(40px,6.6vw,92px)] font-extrabold leading-[0.9] tracking-[-0.05em]">
             Put your chapter on the list.
           </h2>
@@ -21,7 +24,7 @@ export default function Waitlist() {
           </p>
         </Reveal>
 
-        <Reveal delay={140}>
+        <Reveal delay={140} from="scale">
           <WaitlistForm />
         </Reveal>
 

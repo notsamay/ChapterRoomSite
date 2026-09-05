@@ -17,17 +17,19 @@ import { screenWidth, VARIANT_SCALES } from "../components/phone-geometry.mjs";
 
 /** Which frame each shot sits in: the frame's full-size width and whether it's a crop-top card. */
 const FRAMES = {
-  "home": { width: 322 },
-  "check-in": { width: 284 },
-  "excuses": { width: 284 },
-  "roles": { width: 316 },
-  "poll": { width: 276 },
-  "chat": { width: 276 },
-  "announcements": { width: 276 },
-  "screenshot-logged": { width: 372 },
+  "home": { width: 432 },
+  "check-in": { width: 330 },
+  "excuses": { width: 330 },
+  "roles": { width: 402 },
+  "poll": { width: 402 },
+  "chat": { width: 402 },
+  "announcements": { width: 402 },
+  "screenshot-logged": { width: 432 },
   "vouchers": { width: 260, crop: true },
   "album": { width: 260, crop: true },
-  "register": { width: 284 },
+  "register": { width: 260, crop: true },
+  "members": { width: 330 },
+  "groups": { width: 330 },
 };
 
 const dir = path.resolve("public/screens");

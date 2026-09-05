@@ -2,11 +2,11 @@ import SiteNav from "@/components/SiteNav";
 import Attendance from "@/components/sections/Attendance";
 import Chats from "@/components/sections/Chats";
 import Colonies from "@/components/sections/Colonies";
+import Features from "@/components/sections/Features";
 import Hero from "@/components/sections/Hero";
-import MoneyAndAlbums from "@/components/sections/MoneyAndAlbums";
 import Privacy from "@/components/sections/Privacy";
 import Promises from "@/components/sections/Promises";
-import Roles from "@/components/sections/Roles";
+import Organization from "@/components/sections/Organization";
 import SiteFooter from "@/components/sections/SiteFooter";
 import Waitlist from "@/components/sections/Waitlist";
 
@@ -33,11 +33,11 @@ export default function Home() {
       <main>
         <Hero />
         <Promises />
-        <Attendance />
-        <Roles />
         <Chats />
+        <Features />
         <Privacy />
-        <MoneyAndAlbums />
+        <Organization />
+        <Attendance />
         <Colonies />
         <Waitlist />
       </main>
