@@ -11,6 +11,7 @@ export default function SiteFooter() {
         <nav aria-label="Footer">
           <Link href="/privacy">Privacy policy</Link>
           <Link href="/terms">Terms</Link>
+          <Link href="/support">Support</Link>
           <a href="mailto:support@joinchapterroom.com">support@joinchapterroom.com</a>
         </nav>
         <span>Chapter Room LLC · Madison, WI</span>

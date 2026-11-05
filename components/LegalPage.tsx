@@ -1,55 +1,63 @@
-import Link from "next/link";
-import SiteFooter from "@/components/sections/SiteFooter";
+import DocShell from "@/components/DocShell";
 import { LEGAL_DOCS, readLegalDoc, type LegalSlug } from "@/lib/legal";
 
-/**
- * A legal document page. Gets its own compact header rather than `SiteNav`, whose links are
- * in-page anchors and whose scroll spy assumes the home page.
- */
+const slugify = (text: string) =>
+  text
+    .replace(/<[^>]+>/g, "")
+    .toLowerCase()
+    .replace(/&[a-z#0-9]+;/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const decode = (text: string) =>
+  text
+    .replace(/&#39;/g, "’")
+    .replace(/&quot;/g, "\"")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+
+/** Gives every section heading an id, and returns the list for the table of contents. */
+function withAnchors(html: string) {
+  const sections: { id: string; label: string }[] = [];
+  const out = html.replace(/<h2>(.*?)<\/h2>/g, (_, inner: string) => {
+    const id = slugify(inner);
+    sections.push({ id, label: decode(inner.replace(/<[^>]+>/g, "")).replace(/^\d+\.\s*/, "") });
+    return `<h2 id="${id}">${inner}</h2>`;
+  });
+  return { html: out, sections };
+}
+
+/** A legal document (legal/*.md) in the site's style, with a table of contents beside it. */
 export default function LegalPage({ slug }: { slug: LegalSlug }) {
   const doc = readLegalDoc(slug);
-  const others = (Object.keys(LEGAL_DOCS) as LegalSlug[]).filter((s) => s !== slug);
+  const { html, sections } = withAnchors(doc.html);
 
   return (
-    <>
-      <header className="bg-pine text-cream">
-        <div className="mx-auto flex max-w-container flex-wrap items-center justify-between gap-4 px-6 py-5">
-          <Link href="/" className="flex items-center gap-2" aria-label="Chapter Room home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/media/app-icon.png" alt="" width={30} height={30} className="rounded-[8px]" />
-            <span className="font-wordmark text-[20px] font-bold">chapter room</span>
-          </Link>
-          <nav className="flex items-center gap-5 text-[14px] font-medium text-cream/70">
-            {others.map((s) => (
-              <Link key={s} href={LEGAL_DOCS[s].path} className="transition-colors hover:text-cream">
-                {LEGAL_DOCS[s].title}
-              </Link>
-            ))}
-            <Link
-              href="/"
-              className="rounded-full border border-cream/30 px-4 py-2 text-cream transition-colors hover:bg-cream/10"
-            >
-              Back to site
-            </Link>
-          </nav>
-        </div>
-      </header>
-
-      <main className="bg-bone text-ink">
-        <article className="mx-auto max-w-[760px] px-6 pb-[clamp(72px,9vw,120px)] pt-[clamp(56px,7vw,96px)]">
-          <h1 className="font-head text-[clamp(38px,5vw,60px)] font-extrabold leading-[0.98] tracking-[-0.04em]">
-            {doc.title}
-          </h1>
-          {doc.updated && <p className="mt-4 text-[15px] text-ink/55">Last updated {doc.updated}</p>}
-          <div
-            className="legal-prose mt-10"
-            // Author-controlled Markdown from `legal/`, converted at build time. No user input.
-            dangerouslySetInnerHTML={{ __html: doc.html }}
-          />
-        </article>
-      </main>
-
-      <SiteFooter />
-    </>
+    <DocShell
+      path={LEGAL_DOCS[slug].path}
+      title={`${doc.title.toLowerCase()}.`}
+      meta={doc.updated ? `Last updated ${doc.updated}` : undefined}
+    >
+      <div className="cr-doc-body">
+        {sections.length > 2 && (
+          <aside className="cr-toc" aria-label="On this page">
+            <span>On this page</span>
+            <ol>
+              {sections.map((s) => (
+                <li key={s.id}>
+                  <a href={`#${s.id}`}>{s.label}</a>
+                </li>
+              ))}
+            </ol>
+          </aside>
+        )}
+        <article
+          className="cr-prose"
+          // Author-controlled Markdown from `legal/`, converted at build time. No user input.
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      </div>
+    </DocShell>
   );
 }

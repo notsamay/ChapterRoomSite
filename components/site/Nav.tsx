@@ -15,26 +15,29 @@ const LINKS = [
 // Events and Dues are desktop-only sections, so the phone menu leaves them out.
 const MENU = LINKS.filter((l) => l.href !== "#events" && l.href !== "#money");
 
-/** The floating dark-glass pill. On phones it shows the wordmark and a menu button. */
-export default function Nav() {
+/**
+ * The floating dark-glass pill. On phones it shows the wordmark and a menu button.
+ * `base` is "/" on other pages, so the links go back to the home page's sections.
+ */
+export default function Nav({ base = "" }: { base?: string }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
   return (
     <header className="cr-nav">
       <div className="cr-nav-bar">
-        <a href="#top" className="cr-brand" aria-label="Chapter Room home">
+        <a href={`${base}#top`} className="cr-brand" aria-label="Chapter Room home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={STILLS.appIcon} alt="" width={30} height={30} />
           <span className="cr-wordmark">chapter room</span>
         </a>
         <nav aria-label="Main" className="cr-nav-links">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href}>
+            <a key={l.href} href={base + l.href}>
               {l.label}
             </a>
           ))}
-          <a href="#join" className="cr-nav-cta">
+          <a href={`${base}#join`} className="cr-nav-cta">
             Get the app
           </a>
           <button
@@ -53,11 +56,11 @@ export default function Nav() {
       {open && (
         <div className="cr-nav-menu">
           {MENU.map((l) => (
-            <a key={l.href} href={l.href} onClick={close}>
+            <a key={l.href} href={base + l.href} onClick={close}>
               {l.label}
             </a>
           ))}
-          <a href="#join" onClick={close} className="cr-menu-cta">
+          <a href={`${base}#join`} onClick={close} className="cr-menu-cta">
             Join the waiting room
           </a>
         </div>

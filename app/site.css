@@ -246,6 +246,73 @@
 .cr-footer a { color: #273043; text-decoration: none; }
 .cr-footer a:hover { color: #123a2e; }
 
+/* ── Policy and support pages ──────────────────────────────────────────────── */
+.cr-doc-hero { position: relative; overflow: hidden; background: var(--deep); color: #ffffff; margin-top: -88px; }
+.cr-doc-hero-in { position: relative; max-width: 1200px; margin: 0 auto; padding: 168px 24px 64px; display: flex; flex-direction: column; gap: 20px; }
+.cr-doc-hero h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(44px, 6vw, 84px); line-height: 0.95; letter-spacing: -0.035em; animation: cr-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+.cr-doc-lead { margin: 0; max-width: 560px; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; color: var(--cream); }
+.cr-doc-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; font-size: 15px; color: var(--w72); }
+.cr-doc-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.cr-site .cr-doc-pills a { display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(246, 242, 233, 0.24); color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 500; transition: background-color 0.2s ease, border-color 0.2s ease; }
+.cr-site .cr-doc-pills a:hover { background: rgba(246, 242, 233, 0.1); border-color: rgba(246, 242, 233, 0.45); }
+.cr-site .cr-doc-pills a[aria-current="page"] { background: var(--cream); border-color: var(--cream); color: var(--deep); }
+
+.cr-doc-body { max-width: 1200px; margin: 0 auto; padding: 72px 24px 112px; display: flex; gap: 72px; align-items: flex-start; }
+.cr-toc { flex: 0 0 240px; position: sticky; top: 104px; max-height: calc(100vh - 128px); overflow: auto; display: flex; flex-direction: column; gap: 12px; }
+.cr-toc > span { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(39, 48, 67, 0.6); }
+.cr-toc ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 2px; border-left: 2px solid rgba(18, 58, 46, 0.1); }
+.cr-site .cr-toc a { display: block; padding: 6px 0 6px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: 14.5px; line-height: 1.35; color: var(--navy); text-decoration: none; transition: color 0.2s ease, border-color 0.2s ease; }
+.cr-site .cr-toc a:hover { color: var(--deep); border-left-color: var(--sage); }
+
+.cr-prose { flex: 1 1 auto; min-width: 0; max-width: 720px; font-size: 17px; line-height: 1.7; color: #1f2a24; }
+.cr-prose h2 { margin: 56px 0 16px; font-family: var(--display); font-weight: 800; font-size: clamp(26px, 2.6vw, 32px); line-height: 1.1; letter-spacing: -0.02em; color: var(--deep); scroll-margin-top: 104px; }
+.cr-prose > h2:first-child { margin-top: 0; }
+.cr-prose h3 { margin: 32px 0 10px; font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -0.01em; color: var(--deep); }
+.cr-prose p { margin: 0 0 18px; }
+.cr-prose strong { color: var(--deep); font-weight: 700; }
+.cr-site .cr-prose a { color: var(--deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--sage); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.cr-prose ul, .cr-prose ol { margin: 0 0 18px; padding-left: 22px; }
+.cr-prose li { margin: 6px 0; }
+.cr-prose li::marker { color: var(--sage); }
+.cr-prose hr { margin: 40px 0; border: 0; border-top: 1px solid rgba(18, 58, 46, 0.12); }
+.cr-prose table { width: 100%; margin: 8px 0 24px; border-collapse: separate; border-spacing: 0; border: 1px solid rgba(18, 58, 46, 0.14); border-radius: 16px; overflow: hidden; font-size: 15px; line-height: 1.5; }
+.cr-prose th { background: var(--cream); color: var(--deep); font-weight: 600; text-align: left; padding: 12px 16px; }
+.cr-prose td { padding: 12px 16px; border-top: 1px solid rgba(18, 58, 46, 0.1); vertical-align: top; }
+
+.cr-support { max-width: 1200px; margin: 0 auto; padding: 72px 24px 112px; display: flex; flex-direction: column; gap: 88px; }
+.cr-support-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; }
+.cr-card { box-sizing: border-box; padding: 28px; border-radius: 22px; border: 1px solid rgba(18, 58, 46, 0.12); background: #ffffff; display: flex; flex-direction: column; gap: 12px; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease; }
+.cr-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -28px rgba(11, 18, 14, 0.35); }
+.cr-card-cream { background: var(--cream); border-color: var(--cream); }
+.cr-card h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 26px; letter-spacing: -0.02em; color: var(--deep); }
+.cr-card p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--navy); flex: 1; }
+.cr-site .cr-card-btn { align-self: flex-start; display: inline-flex; align-items: center; height: 48px; padding: 0 20px; margin-top: 8px; border-radius: 14px; background: var(--deep); color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15.5px; transition: background-color 0.2s ease; overflow-wrap: anywhere; }
+.cr-site .cr-card-btn:hover { background: #0b241c; color: #ffffff; }
+.cr-site .cr-card-link { align-self: flex-start; margin-top: 8px; color: var(--deep); font-weight: 600; font-size: 15.5px; text-decoration: underline; text-decoration-color: var(--sage); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+.cr-faq { display: flex; flex-direction: column; gap: 28px; max-width: 840px; }
+.cr-faq-group { display: flex; flex-direction: column; gap: 8px; }
+.cr-faq-group h3 { margin: 12px 0 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(39, 48, 67, 0.6); }
+.cr-faq details { border-radius: 16px; border: 1px solid rgba(18, 58, 46, 0.12); background: #ffffff; transition: background-color 0.28s ease, border-color 0.28s ease; }
+.cr-faq details[open] { background: var(--cream); border-color: var(--cream); }
+.cr-faq summary { list-style: none; cursor: pointer; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -0.01em; color: var(--deep); }
+.cr-faq summary::-webkit-details-marker { display: none; }
+.cr-faq summary i { flex: none; position: relative; width: 14px; height: 14px; }
+.cr-faq summary i::before, .cr-faq summary i::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; border-radius: 1px; background: var(--sage); transition: transform 0.25s ease; }
+.cr-faq summary i::after { transform: rotate(90deg); }
+.cr-faq details[open] summary i::after { transform: rotate(0deg); }
+.cr-faq details p { margin: 0; padding: 0 22px 20px; font-size: 16px; line-height: 1.6; color: var(--navy); max-width: 680px; animation: cr-fade 0.28s ease; }
+
+@media (max-width: 860px) {
+  .cr-toc { display: none; }
+  .cr-doc-body { padding-top: 48px; }
+}
+@media (max-width: 760px) {
+  .cr-doc-hero-in { padding-top: 132px; padding-bottom: 48px; }
+  .cr-support { padding-top: 48px; gap: 64px; }
+  .cr-prose table { display: block; overflow-x: auto; }
+}
+
 /* ── Effects ───────────────────────────────────────────────────────────────── */
 /* Scroll-in: only once JS is running (the observer adds .cr-js), so nothing hides without it. */
 .cr-js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); transition-delay: calc(var(--i, 0) * 90ms); }
@@ -297,11 +364,19 @@
   .cr-stage { min-height: 0; }
   .cr-hide-phone { display: none !important; }
 
-  /* Phone frames: only the hero keeps its bezel; elsewhere the recording shows with rounded corners. */
-  .cr-stage .cr-phone { width: min(100%, 236px); }
-  .cr-phone[data-keep] { width: min(100%, 250px); margin: 0 auto; }
-  .cr-phone:not([data-keep]) { padding: 0; background: transparent; box-shadow: 0 20px 44px -22px rgba(11, 18, 14, 0.5); }
-  .cr-phone:not([data-keep]) .cr-phone-island, .cr-phone:not([data-keep]) .cr-phone-btn { display: none; }
+  /* Phones keep the black frame and side buttons here too, just smaller. */
+  /* --w drives the corner radius and the island, so shrink it rather than just the width. */
+  .cr-stage .cr-phone { --w: 222px !important; }
+  .cr-phone[data-keep] { --w: 236px !important; margin: 0 auto; }
+  .cr-sec-stage .cr-phone { --w: 300px !important; }
+
+  /* Hero: tighter, so the phone starts on the first screen. */
+  .cr-hero-in { padding: 112px 24px 64px; gap: 36px; }
+  .cr-hero-copy { gap: 18px; }
+  .cr-hero h1 { font-size: 46px; }
+  .cr-hero-lead { font-size: 17px; }
+  .cr-hero-actions { gap: 14px 20px; margin-top: 4px; }
+  .cr-hero-halo { width: 420px; height: 420px; margin: -210px 0 0 -210px; }
 
   /* Feature tabs become a 3 × 2 grid of short buttons, with the line under the recording. */
   .cr-tabs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
