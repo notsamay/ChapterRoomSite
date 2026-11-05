@@ -1,7 +1,7 @@
 # Chapter Room — Marketing Site
 
-Single-page Next.js 14 (App Router) + Tailwind site, built from the Claude Design handoff
-(`Chapter Room Design System-handoff.zip` → `project/Chapter Room Site.dc.html`).
+Single-page Next.js 14 (App Router) site, built from the Chapter Room Web design kit
+(deep green, sage and logo cream, Cabinet Grotesk and Commissioner, real app recordings).
 
 ## Run locally
 
@@ -16,29 +16,31 @@ Open http://localhost:3000.
 
 ```
 app/
-  layout.tsx              fonts, metadata, OG/Twitter cards
+  layout.tsx              fonts (next/font/local), metadata, OG/Twitter cards
   page.tsx                section order + JSON-LD
-  globals.css             design tokens, phone-frame system, scroll-reveal
+  site.css                the home page's styles, every class prefixed cr-
+  globals.css             Tailwind base + the legal pages' prose styles
+  fonts/                  Cabinet Grotesk and Commissioner, self-hosted
   api/waitlist/route.ts   waitlist intake
   privacy/page.tsx        renders legal/privacy-policy.md
   terms/page.tsx          renders legal/terms-of-service.md
 components/
-  SiteNav.tsx             sticky pill nav — scroll spy + mobile sheet
-  PhoneFrame.tsx          device bezel; renders a mock or a real screenshot
-  WaitlistForm.tsx        client form with validation and states
-  ColonyMap.tsx           interactive US map — hover/tap any state; no mapping library
-  colony-map-data.ts      generated — see scripts/generate-colony-map.mjs
-  screenshots.ts          swap mocks for real screenshots here
-  phone-geometry.mjs      whole-pixel bezel/screen maths shared with scripts/build-screens.mjs
-  Reveal.tsx              scroll-in wrapper on one shared observer
-  sections/               one file per band; copy lives at the top of each
-                          (Features = "Essentials": events, vouchers, albums, campus chats; role codes in
-                          Organization = positions, powers and groups)
-  screens/                the in-app mockups inside the phones
+  site/                   one file per home-page section (copy lives in each file)
+    Nav.tsx               floating dark-glass nav, menu button on phones
+    Hero.tsx
+    Rivers.tsx            the tabbed showcases: features, events, dues, plus chats and feeds
+    Showcase.tsx          tabs on one side, a green stage with one recording on the other
+    Security.tsx          Off / Medium / Max
+    Hierarchy.tsx         roles and groups
+    Setup.tsx             up and running in one night + features that save you hours
+    Launch.tsx            the dot map
+    WaitingRoom.tsx       the waiting-room card and form
+    map-data.ts           generated dot grid and school positions (960 × 600 AlbersUSA)
+    media.ts              every recording and still, by name
+  sections/SiteFooter.tsx footer shared with the legal pages
+  LegalPage.tsx
+public/media/             real recordings of the app (mp4 + poster jpg) and stills
 scripts/
-  import-screen.mjs       brings a simulator shot into public/screens/
-  build-screens.mjs       pre-scales every shot for 1x–3x displays (npm run screens)
-  generate-colony-map.mjs rebuilds colony-map-data.ts
   og-image.html           source for public/og.png
   waitlist-sheet.gs       Apps Script that writes waitlist signups to a Google Sheet
 legal/                    privacy policy + terms, Markdown, rendered at /privacy and /terms
@@ -46,16 +48,18 @@ legal/                    privacy policy + terms, Markdown, rendered at /privacy
 
 ## Editing copy
 
-Each band in `components/sections/` keeps its own copy — headline and body inline,
-repeated items (promises, roles, privacy guarantees) in a small array at the top of the
-file. Nothing is shared between sections, so a change stays where you make it.
+Each section in `components/site/` keeps its own copy inline; repeated items (tabs, roles,
+groups, tiles) sit in a small array at the top of the file.
 
-## Real screenshots
+## Recordings
 
-Every phone renders a real app screenshot from `public/screens/`, chosen by the matching key
-in `components/screenshots.ts`. Set a key to `null` and `PhoneFrame` falls back to the
-hand-built mock of that screen in `components/screens/`. See **Screenshots** below for how
-to import a new shot.
+Every clip is a real recording of the app on the sample chapter, cropped to the exact shape
+it's shown at. Swap one by replacing `public/media/<name>.mp4` and its `<name>-poster.jpg`.
+Showcase tabs advance when their clip has played through, so update the tab's `ms` if a clip's
+length changes.
+
+On phones the Events, Dues and "chats and feeds" sections are hidden (the feature tabs cover
+them), the map is dropped, and only the hero keeps its phone frame.
 
 ## Waitlist
 
@@ -76,8 +80,8 @@ Google Sheet setup, once:
 4. Copy the web app URL (ends in `/exec`) into `.env.local` as `WAITLIST_WEBHOOK_URL`.
    Opening that URL in a browser should show `{"ok":true,...}`.
 
-Rows land on a `Waitlist` tab: submitted time, email, phone, chapter, and a source column that
-reads `duplicate` for a repeat email. Editing the script later needs a **new deployment**
+Rows land on a `Waitlist` tab: submitted time, email, phone, chapter, a source column that
+reads `duplicate` for a repeat email, and school. Editing the script later needs a **new deployment**
 (Deploy → Manage deployments → edit → new version) or the old code keeps running.
 
 ```bash
@@ -88,43 +92,8 @@ NEXT_PUBLIC_SITE_URL=https://joinchapterroom.com   # used for canonical + OG URL
 
 ## Type
 
-- **Bricolage Grotesque** (the hero and the closing statement) — self-hosted by `next/font`.
-- **Cabinet Grotesk** (section headings) and **General Sans** (everything else) — Fontshare
-  CDN, linked in `app/layout.tsx`. Neither has a Google Fonts equivalent.
-
-## The phone mockups
-
-The screens in `components/screens/` are authored against a 300px-wide reference phone and
-sized entirely in `u-*` classes. Inside a `.phone-ui`, `--u` resolves to the frame's real
-width ÷ 300, so a screen holds its proportions in a 322px hero phone and a 260px card phone
-alike. Outside a phone `--u` falls back to `1px`.
-
-The frame's own proportions (bezel radius, padding, notch) are container-query units on
-`.phone-frame`, which is why it sits inside a separate `.phone` container — `cqw` resolves
-against an element's nearest *ancestor* container, never itself.
-
-## Regenerating the colony map
-
-The map is projected at build time so the page ships no mapping JavaScript:
-
-```bash
-npm i --no-save d3-geo topojson-client topojson-simplify
-node scripts/generate-colony-map.mjs
-```
-
-Edit `HIGHLIGHT` (state FIPS ids) and `CITIES` (city, school, coordinates) in that script to
-change which schools show. Every state is hoverable/tappable: colony states list their
-schools, the rest link to the waitlist.
-
-## Screenshots
-
-Import each 1206 x 2622 simulator shot with
-`node scripts/import-screen.mjs "<shot>.png" <slot>` (slot names are the keys in
-`components/screenshots.ts`; the script blanks the simulator status bar so every phone matches),
-then run `npm run screens`. That renders each shot at the exact pixel width its phone frame
-draws it at, for 1x, 1.25x, 1.5x, 2x and 3x displays, so the browser never has to shrink the
-original itself (which blurs the UI text). New phone slots need a line in the `FRAMES` map in
-`scripts/build-screens.mjs`.
+- **Cabinet Grotesk** (headlines and the wordmark) and **Commissioner** (everything else),
+  self-hosted from `app/fonts/` through `next/font/local`.
 
 ## Legal pages
 

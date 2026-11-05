@@ -1,14 +1,12 @@
-import SiteNav from "@/components/SiteNav";
-import Attendance from "@/components/sections/Attendance";
-import Chats from "@/components/sections/Chats";
-import Colonies from "@/components/sections/Colonies";
-import Features from "@/components/sections/Features";
-import Hero from "@/components/sections/Hero";
-import Privacy from "@/components/sections/Privacy";
-import Promises from "@/components/sections/Promises";
-import Organization from "@/components/sections/Organization";
 import SiteFooter from "@/components/sections/SiteFooter";
-import Waitlist from "@/components/sections/Waitlist";
+import Hero from "@/components/site/Hero";
+import Hierarchy from "@/components/site/Hierarchy";
+import Launch from "@/components/site/Launch";
+import Nav from "@/components/site/Nav";
+import Reveal from "@/components/site/Reveal";
+import { ChatsAndFeeds, Events, Features, Money } from "@/components/site/Rivers";
+import Security from "@/components/site/Security";
+import Setup from "@/components/site/Setup";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -17,31 +15,32 @@ const structuredData = {
   applicationCategory: "BusinessApplication",
   operatingSystem: "iOS, Android",
   description:
-    "Attendance, dues, announcements, chats, albums and vouchers for Greek life chapters, in one app.",
+    "Chats, events with location check-in, dues with payment plans, excuses, polls and albums, in one app for student orgs.",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
 
 export default function Home() {
   return (
-    <>
+    <div className="cr-site">
       <script
         type="application/ld+json"
         // Static, author-controlled object — no user input reaches this.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <SiteNav />
+      <Nav />
       <main>
         <Hero />
-        <Promises />
-        <Chats />
         <Features />
-        <Privacy />
-        <Organization />
-        <Attendance />
-        <Colonies />
-        <Waitlist />
+        <Security />
+        <ChatsAndFeeds />
+        <Events />
+        <Money />
+        <Hierarchy />
+        <Setup />
+        <Launch />
       </main>
       <SiteFooter />
-    </>
+      <Reveal />
+    </div>
   );
 }

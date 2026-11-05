@@ -13,7 +13,7 @@
  */
 
 var SHEET_NAME = "Waitlist";
-var HEADERS = ["Submitted at", "Email", "Phone", "Chapter", "Source"];
+var HEADERS = ["Submitted at", "Email", "Phone", "Chapter", "Source", "School"];
 
 function doPost(e) {
   var data;
@@ -26,6 +26,7 @@ function doPost(e) {
   var email = String(data.email || "").trim().toLowerCase();
   var phone = String(data.phone || "").trim();
   var chapter = String(data.chapter || "").trim();
+  var school = String(data.school || "").trim();
   if (!email || !chapter) {
     return respond({ ok: false, error: "email and chapter are required." });
   }
@@ -36,7 +37,7 @@ function doPost(e) {
     var sheet = getSheet();
     var source = isDuplicate(sheet, email) ? "duplicate" : "site";
     var submittedAt = data.submittedAt ? new Date(data.submittedAt) : new Date();
-    sheet.appendRow([submittedAt, email, "'" + phone, chapter, source]);
+    sheet.appendRow([submittedAt, email, "'" + phone, chapter, source, school]);
   } finally {
     lock.releaseLock();
   }

@@ -11,7 +11,7 @@ import { NextResponse } from "next/server";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-type Payload = { email?: unknown; phone?: unknown; chapter?: unknown; company?: unknown };
+type Payload = { email?: unknown; phone?: unknown; chapter?: unknown; school?: unknown; company?: unknown };
 
 export async function POST(request: Request) {
   let body: Payload;
@@ -29,6 +29,7 @@ export async function POST(request: Request) {
   const email = typeof body.email === "string" ? body.email.trim() : "";
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const chapter = typeof body.chapter === "string" ? body.chapter.trim() : "";
+  const school = typeof body.school === "string" ? body.school.trim() : "";
   // Keep whatever formatting they typed, but make sure there is a real number in it.
   const digits = phone.replace(/\D/g, "");
 
@@ -42,7 +43,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Tell us your chapter." }, { status: 422 });
   }
 
-  const signup = { email, phone, chapter, submittedAt: new Date().toISOString() };
+  if (school.length < 2 || school.length > 160) {
+    return NextResponse.json({ error: "Tell us your school." }, { status: 422 });
+  }
+
+  const signup = { email, phone, chapter, school, submittedAt: new Date().toISOString() };
   const webhook = process.env.WAITLIST_WEBHOOK_URL;
 
   if (!webhook) {
@@ -58,7 +63,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        text: `New Chapter Room waitlist signup: ${chapter} — ${email} — ${phone}`,
+        text: `New Chapter Room waitlist signup: ${chapter} at ${school} — ${email} — ${phone}`,
         ...signup,
       }),
     });

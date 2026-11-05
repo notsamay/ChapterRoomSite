@@ -1,7 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
 import SiteFooter from "@/components/sections/SiteFooter";
-import { Wordmark } from "@/components/SiteNav";
 import { LEGAL_DOCS, readLegalDoc, type LegalSlug } from "@/lib/legal";
 
 /**
@@ -17,8 +15,9 @@ export default function LegalPage({ slug }: { slug: LegalSlug }) {
       <header className="bg-pine text-cream">
         <div className="mx-auto flex max-w-container flex-wrap items-center justify-between gap-4 px-6 py-5">
           <Link href="/" className="flex items-center gap-2" aria-label="Chapter Room home">
-            <Image src="/logo-mark.png" alt="" width={40} height={33} className="h-[30px] w-auto" />
-            <Wordmark className="translate-y-px text-[17px]" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/media/app-icon.png" alt="" width={30} height={30} className="rounded-[8px]" />
+            <span className="font-wordmark text-[20px] font-bold">chapter room</span>
           </Link>
           <nav className="flex items-center gap-5 text-[14px] font-medium text-cream/70">
             {others.map((s) => (

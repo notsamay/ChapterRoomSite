@@ -1,21 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import "./site.css";
 
-// The two poster statements — the hero and the closing banner — are set in Bricolage.
-// next/font self-hosts it, so it costs no third-party request.
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
+// The brand faces, self-hosted: Cabinet Grotesk for headlines and the wordmark,
+// Commissioner for everything else.
+const cabinet = localFont({
+  src: [
+    { path: "./fonts/CabinetGrotesk-Medium.woff2", weight: "500" },
+    { path: "./fonts/CabinetGrotesk-Bold.woff2", weight: "700" },
+    { path: "./fonts/CabinetGrotesk-Extrabold.woff2", weight: "800" },
+  ],
   display: "swap",
-  variable: "--font-bricolage",
+  variable: "--font-cabinet",
 });
 
-// The wordmark only.
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
+const commissioner = localFont({
+  src: [
+    { path: "./fonts/Commissioner-Regular.woff2", weight: "400" },
+    { path: "./fonts/Commissioner-Medium.woff2", weight: "500" },
+    { path: "./fonts/Commissioner-SemiBold.woff2", weight: "600" },
+    { path: "./fonts/Commissioner-Bold.woff2", weight: "700" },
+  ],
   display: "swap",
-  variable: "--font-space",
+  variable: "--font-commissioner",
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://joinchapterroom.com";
@@ -55,8 +63,8 @@ export const metadata: Metadata = {
     images: ["/og.png"],
   },
   icons: {
-    icon: [{ url: "/logo.png", type: "image/png" }],
-    apple: [{ url: "/logo.png" }],
+    icon: [{ url: "/media/app-icon.png", type: "image/png" }],
+    apple: [{ url: "/media/app-icon.png" }],
   },
 };
 
@@ -67,17 +75,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${spaceGrotesk.variable}`}>
-      <head>
-        {/* Cabinet Grotesk (section headings) and General Sans (everything else) are
-            Fontshare faces — no Google Fonts equivalent, so they load from its CDN. */}
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,600&f[]=general-sans@400,500,600&display=swap"
-        />
-      </head>
+    <html lang="en" className={`${cabinet.variable} ${commissioner.variable}`}>
       <body className="bg-pine font-sans text-cream antialiased">{children}</body>
     </html>
   );
