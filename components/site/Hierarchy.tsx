@@ -4,8 +4,6 @@ import Title from "./Title";
 
 const ROLES = ["President", "Executive", "Chairman", "Officer", "Active", "New Member"];
 const GROUPS = ["Recruitment", "Social Committee", "Philanthropy", "Intramurals", "Class of 2027", "Alumni Relations"];
-// Each rung down the ladder sits a little quieter.
-const RUNG = ["", "0.14", "0.12", "0.10", "0.08", "0.06"];
 
 export default function Hierarchy() {
   return (
@@ -31,7 +29,7 @@ export default function Hierarchy() {
               </div>
               <ol>
                 {ROLES.map((r, i) => (
-                  <li key={r} className="cr-rung" style={{ background: i ? `rgba(246,242,233,${RUNG[i]})` : undefined }}>
+                  <li key={r} className="cr-rung">
                     <i>{i + 1}</i>
                     <span>{r}</span>
                   </li>

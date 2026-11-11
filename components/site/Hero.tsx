@@ -52,7 +52,7 @@ export default function Hero() {
               <span className="cr-only-phone">Join the waiting room</span>
             </a>
             <a href="#features" className="cr-link">
-              See how it works ↓
+              See how it works
             </a>
           </div>
           <p className="cr-hero-note">Free for members. Officers set it up in minutes.</p>
