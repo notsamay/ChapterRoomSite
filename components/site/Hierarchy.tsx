@@ -1,18 +1,19 @@
 import type { CSSProperties } from "react";
 import { STILLS } from "./media";
+import Title from "./Title";
 
 const ROLES = ["President", "Executive", "Chairman", "Officer", "Active", "New Member"];
-const GROUPS = ["Rush Committee", "Social Committee", "Philanthropy", "Intramurals", "Class of 2027", "Alumni Relations"];
+const GROUPS = ["Recruitment", "Social Committee", "Philanthropy", "Intramurals", "Class of 2027", "Alumni Relations"];
 // Each rung down the ladder sits a little quieter.
 const RUNG = ["", "0.14", "0.12", "0.10", "0.08", "0.06"];
 
 export default function Hierarchy() {
   return (
-    <section id="hierarchy" className="cr-hier cr-on-dark">
+    <section id="hierarchy" className="cr-hier cr-g-emerald cr-on-dark">
       <div className="cr-glow cr-hier-glow" aria-hidden="true" />
       <div className="cr-hier-in">
         <div className="cr-head" data-reveal>
-          <h2 className="cr-h2">roles and groups.</h2>
+          <Title text="roles decide / who sees what." />
           <p className="cr-sub">Set them up to match how your chapter already runs.</p>
         </div>
         <div className="cr-hier-cols">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { STILLS } from "./media";
 
 const LINKS = [
   { href: "#features", label: "Features" },
@@ -9,7 +8,7 @@ const LINKS = [
   { href: "#hierarchy", label: "Roles and groups" },
   { href: "#security", label: "Security" },
   { href: "#events", label: "Events" },
-  { href: "#money", label: "Dues" },
+  { href: "#money", label: "Fees" },
 ];
 
 // Events and Dues are desktop-only sections, so the phone menu leaves them out.
@@ -27,9 +26,9 @@ export default function Nav({ base = "" }: { base?: string }) {
     <header className="cr-nav">
       <div className="cr-nav-bar">
         <a href={`${base}#top`} className="cr-brand" aria-label="Chapter Room home">
+          {/* The castle and wordmark lockup, as at the top of every brand graphic. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={STILLS.appIcon} alt="" width={30} height={30} />
-          <span className="cr-wordmark">chapter room</span>
+          <img className="cr-lockup" src="/kit/lockup-on-emerald.png" alt="chapter room" width={480} height={74} />
         </a>
         <nav aria-label="Main" className="cr-nav-links">
           {LINKS.map((l) => (

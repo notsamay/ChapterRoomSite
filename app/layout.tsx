@@ -10,6 +10,7 @@ const cabinet = localFont({
     { path: "./fonts/CabinetGrotesk-Medium.woff2", weight: "500" },
     { path: "./fonts/CabinetGrotesk-Bold.woff2", weight: "700" },
     { path: "./fonts/CabinetGrotesk-Extrabold.woff2", weight: "800" },
+    { path: "./fonts/CabinetGrotesk-Black.woff2", weight: "900" },
   ],
   display: "swap",
   variable: "--font-cabinet",
@@ -29,12 +30,12 @@ const commissioner = localFont({
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://joinchapterroom.com";
 
 const description =
-  "Attendance, dues, announcements, chats, albums and vouchers. Everything your chapter runs on, in one app that actually looks good. Launching spring 2027 on iOS and Android.";
+  "Attendance, membership fees, announcements, chats, albums and vouchers. Everything your chapter runs on, in one app that actually looks good. Launching spring 2027 on iOS and Android.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Chapter Room — Run your chapter from your pocket",
+    default: "Chapter Room — Run your whole org from one app",
     template: "%s · Chapter Room",
   },
   description,
@@ -42,8 +43,10 @@ export const metadata: Metadata = {
   keywords: [
     "fraternity chapter management app",
     "sorority chapter app",
-    "Greek life attendance",
-    "chapter dues tracking",
+    "student org app",
+    "club management app",
+    "attendance check-in",
+    "membership fees",
     "geofenced check-in",
   ],
   authors: [{ name: "Chapter Room" }],
@@ -52,13 +55,13 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Chapter Room",
-    title: "Chapter Room — Run your chapter from your pocket",
+    title: "Chapter Room — Run your whole org from one app",
     description,
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "Chapter Room" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chapter Room — Run your chapter from your pocket",
+    title: "Chapter Room — Run your whole org from one app",
     description,
     images: ["/og.png"],
   },
@@ -74,8 +77,9 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // suppressHydrationWarning: the splash sets data-splash on <html> before React loads (see Splash.tsx).
   return (
-    <html lang="en" className={`${cabinet.variable} ${commissioner.variable}`}>
+    <html lang="en" className={`${cabinet.variable} ${commissioner.variable}`} suppressHydrationWarning>
       <body className="bg-pine font-sans text-cream antialiased">{children}</body>
     </html>
   );

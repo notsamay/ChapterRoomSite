@@ -18,9 +18,9 @@ const FAQ: { group: string; items: [string, string][] }[] = [
     ],
   },
   {
-    group: "Dues and money",
+    group: "Membership fees and money",
     items: [
-      ["Where does the dues money go?", "Straight to your chapter’s own Stripe account, then your chapter’s bank."],
+      ["Where does membership fee money go?", "Straight to your chapter’s own Stripe account, then your chapter’s bank."],
       ["Can members pay in parts?", "Yes. Officers can offer a payment plan, and members pick pay in full or the plan."],
       ["What does it cost to pay?", "Any processing fee is shown before you pay."],
     ],

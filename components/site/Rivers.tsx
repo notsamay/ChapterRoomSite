@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import Phone from "./Phone";
+import Title from "./Title";
 import Showcase, { type ShowcaseTab } from "./Showcase";
 import { CLIPS } from "./media";
 
@@ -38,18 +39,19 @@ const FEATURES: ShowcaseTab[] = [
   },
   {
     title: "Vouchers",
-    line: "Tickets, merch and dues in one list, with what’s overdue up top.",
-    caption: "Dues, tickets and merch, with what’s overdue up top. Pay in full or on a plan.",
+    line: "Tickets, merch and membership fees in one list, with what’s overdue up top.",
+    caption: "Membership fees, tickets and merch, with what’s overdue up top. Pay in full or on a plan.",
     clip: CLIPS.vouchers,
-    alt: "The Vouchers list: Fall Dues overdue, Chapter Hoodie due next, then the Formal Ticket",
+    alt: "The Vouchers list: a membership fee overdue, Chapter Hoodie due next, then the Formal Ticket",
     ms: 9700,
   },
   {
-    title: "Polls",
-    line: "Vote in a tap. Results live.",
-    clip: CLIPS.poll,
-    alt: "Voting in a poll and seeing the results",
-    ms: 7233,
+    title: "Feeds",
+    line: "Announcements from a few, read by everyone. Comments on, reactions only or broadcast only.",
+    caption: "Announcements from a few, read by everyone.",
+    clip: CLIPS.feed,
+    alt: "Posting to Announcements as reactions come in",
+    ms: 8566,
   },
 ];
 
@@ -61,7 +63,7 @@ const EVENTS: ShowcaseTab[] = [
 
 const MONEY: ShowcaseTab[] = [
   { title: "One screen, one button", line: "The amount, the fee and how you pay. Then Paid.", clip: CLIPS.pay, alt: "Buying a Formal Ticket on the Pay screen", ms: 6766 },
-  { title: "Pay in full or in parts", line: "Pick a plan. Pay the rest when it’s due, and see what’s left.", clip: CLIPS.duesPlan, alt: "Paying the rest of a dues payment plan", ms: 8600 },
+  { title: "Pay in full or in parts", line: "Pick a plan. Pay the rest when it’s due, and see what’s left.", clip: CLIPS.duesPlan, alt: "Paying the rest of a membership fee payment plan", ms: 8600 },
   { title: "Merch and tickets", line: "Sizes and quantities. Fees shown before you pay.", clip: CLIPS.merch, alt: "Buying two Chapter Hoodies in size M", ms: 9300 },
   { title: "Payouts to the chapter", line: "Officers see what is held, what is clearing, and when the next deposit lands.", clip: CLIPS.payouts, alt: "The Payouts screen: $4,180 held by Stripe and the next deposit", ms: 6933 },
 ];
@@ -70,7 +72,7 @@ export function Features() {
   return (
     <Showcase
       id="features"
-      title="everything your chapter does, in one place."
+      title="everything your org / runs on."
       subtitle="Real recordings of the app, running on a sample chapter. Pick one, or let it play."
       tabs={FEATURES}
       phoneGrid
@@ -82,11 +84,12 @@ export function Events() {
   return (
     <Showcase
       id="events"
-      title="show up. you’re checked in."
+      title="show up. / you’re checked in."
       subtitle="Officers set a radius and a window. Members check in when they’re actually there, and spoofed locations get rejected."
       tabs={EVENTS}
       flip
       hideOnPhone
+      ground="ivory"
     />
   );
 }
@@ -95,10 +98,11 @@ export function Money() {
   return (
     <Showcase
       id="money"
-      title="dues, without the venmo chase."
-      subtitle="Members pay in the app or split dues into a payment plan. Payments run through Stripe, and the money goes to your chapter’s own account."
+      title="membership fees, / without the chase."
+      subtitle="Members pay in the app or split membership fees into a payment plan. Payments run through Stripe, and the money goes to your chapter’s own account."
       tabs={MONEY}
       hideOnPhone
+      ground="ivory"
     />
   );
 }
@@ -117,15 +121,15 @@ export function ChatsAndFeeds() {
     </figure>
   );
   return (
-    <section id="talk" className="cr-section cr-hide-phone" style={{ background: "#FFFFFF" }}>
+    <section id="talk" className="cr-section cr-g-emerald cr-hide-phone">
       <div className="cr-wrap">
         <div className="cr-head" data-reveal>
-          <h2 className="cr-h2">chats and feeds.</h2>
-          <p className="cr-sub">Talk in chats. Officers post to feeds.</p>
+          <Title text="every conversation, / in one place." />
+          <p className="cr-sub">Chats are for talking. Feeds are for what everyone needs to see.</p>
         </div>
         <div className="cr-cf">
-          {card(CLIPS.chat, "Chats", "Your chapter, your committees, and chats with other chapters at your school.", "A chapter chat with typing, new messages and a double-tap heart", 0)}
-          {card(CLIPS.feed, "Feeds", "Announcements everyone sees. Everyone can react and reply.", "Posting to Announcements as reactions come in", 1)}
+          {card(CLIPS.chat, "Chats", "One for the whole org, one for every group in it, and chats with other orgs on campus.", "A chapter chat with typing, new messages and a double-tap heart", 0)}
+          {card(CLIPS.feed, "Feeds", "Announcements that don’t get buried. You pick who posts and who reads, with replies on or broadcast only.", "Posting to Announcements as reactions come in", 1)}
         </div>
       </div>
     </section>

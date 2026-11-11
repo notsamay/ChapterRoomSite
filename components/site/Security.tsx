@@ -1,6 +1,7 @@
 "use client";
 
 import Phone from "./Phone";
+import Title from "./Title";
 import { CLIPS, STILLS } from "./media";
 import { useAutoTabs, useInView } from "./useAutoTabs";
 
@@ -35,10 +36,10 @@ export default function Security() {
   const level = LEVELS[current];
 
   return (
-    <section ref={ref} id="security" className="cr-section cr-on-dark" style={{ background: "#0B120E", color: "#FFFFFF" }}>
+    <section ref={ref} id="security" className="cr-section cr-g-black cr-on-dark">
       <div className="cr-wrap">
         <div className="cr-head" data-reveal>
-          <h2 className="cr-h2">what’s said in the room stays in the room.</h2>
+          <Title text="what’s said in the room / stays in the room." />
           <p className="cr-sub">
             Every chat, feed and album has its own security level. Officers pick Off, Medium or Max, and everyone in
             the space sees the level at the top of it.

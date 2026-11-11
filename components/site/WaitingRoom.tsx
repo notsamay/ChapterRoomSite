@@ -101,7 +101,7 @@ export default function WaitingRoom() {
               name="school"
               type="text"
               list="cr-schools"
-              placeholder="Start typing your school"
+              placeholder="Type your school"
               autoComplete="off"
               required
               disabled={sending}

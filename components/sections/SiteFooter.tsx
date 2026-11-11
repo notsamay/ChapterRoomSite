@@ -5,7 +5,8 @@ export default function SiteFooter() {
     <footer className="cr-footer">
       <div className="cr-footer-in">
         <span className="cr-footer-brand">
-          <b>chapter room</b>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="cr-lockup" src="/kit/lockup-on-emerald.png" alt="chapter room" width={480} height={74} />
           <span>for student orgs, by student orgs.</span>
         </span>
         <nav aria-label="Footer">

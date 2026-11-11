@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import Phone from "./Phone";
+import Title from "./Title";
 import type { Clip } from "./media";
 import { useAutoTabs, useInView } from "./useAutoTabs";
 
@@ -27,6 +28,7 @@ export default function Showcase({
   flip = false,
   phoneGrid = false,
   hideOnPhone = false,
+  ground = "ivory",
   children,
 }: {
   id: string;
@@ -36,6 +38,8 @@ export default function Showcase({
   flip?: boolean;
   phoneGrid?: boolean;
   hideOnPhone?: boolean;
+  /** Which brand ground the section sits on. */
+  ground?: "ivory" | "emerald";
   children?: ReactNode;
 }) {
   // Nothing cycles until the section is on screen; coming back starts the tab over.
@@ -44,7 +48,7 @@ export default function Showcase({
   const tab = tabs[current];
 
   const list = (
-    <div role="tablist" aria-label={title} className={`cr-tabs ${phoneGrid ? "cr-tabs-grid" : "cr-tabs-scroll"}`}>
+    <div role="tablist" aria-label={title.replace(" / ", " ")} className={`cr-tabs ${phoneGrid ? "cr-tabs-grid" : "cr-tabs-scroll"}`}>
       {tabs.map((t, i) => {
         const on = i === current;
         return (
@@ -81,10 +85,10 @@ export default function Showcase({
   );
 
   return (
-    <section ref={ref} id={id} className={`cr-section${hideOnPhone ? " cr-hide-phone" : ""}`} style={{ background: "#FFFFFF" }}>
+    <section ref={ref} id={id} className={`cr-section cr-g-${ground}${hideOnPhone ? " cr-hide-phone" : ""}`}>
       <div className="cr-wrap">
         <div className="cr-head" data-reveal>
-          <h2 className="cr-h2">{title}</h2>
+          <Title text={title} />
           <p className="cr-sub">{subtitle}</p>
         </div>
         <div className="cr-show" data-reveal>

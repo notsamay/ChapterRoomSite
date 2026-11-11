@@ -395,3 +395,384 @@
   .cr-tiles { gap: 12px; }
   .cr-tiles > figure:nth-child(n + 4) { display: none; }
 }
+
+/* ── The brand graphics system ─────────────────────────────────────────────────
+   The website shares one look with the social graphics (the Chapter Room Social Kit):
+   two grounds, emerald and ivory, alternating down the page; heavy two-part lower-case
+   headlines (line two in the accent); real app UI floating with soft emerald shadows.
+   Palette only: emerald, cream, sage, sage light, white and black. */
+.cr-site {
+  --emerald-mid: #1a4435;
+  --emerald-light: #325c43;
+  --ivory-shade: #e3e6d9;
+  --lift: 0 2px 6px rgba(6, 24, 17, 0.07), 0 24px 60px -18px rgba(6, 24, 17, 0.28);
+  --lift-dark: 0 2px 6px rgba(6, 24, 17, 0.26), 0 28px 70px -18px rgba(6, 24, 17, 0.6);
+  background: var(--deep);
+}
+
+/* Grounds. Each sets the ink, accent, support and body colours its content reads in. */
+.cr-g-emerald {
+  position: relative;
+  --h: #f6f2e9; --acc: #7fa884; --sub: #7fa884; --txt: rgba(246, 242, 233, 0.8); --line: rgba(246, 242, 233, 0.14); --shadow: var(--lift-dark);
+  color: var(--cream);
+  /* Clean, like the app's green: no grain. */
+  background:
+    radial-gradient(95% 55% at 50% 108%, rgba(78, 122, 84, 0.36), rgba(78, 122, 84, 0) 100%),
+    linear-gradient(239deg, #123a2e 0%, #1a4435 60%, #325c43 100%);
+}
+.cr-g-ivory {
+  position: relative;
+  --h: #123a2e; --acc: #4e7a54; --sub: #4e7a54; --txt: rgba(18, 58, 46, 0.8); --line: rgba(18, 58, 46, 0.1); --shadow: var(--lift);
+  color: var(--deep);
+  /* Clean, no grain. */
+  background:
+    radial-gradient(75% 40% at 8% 2%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 100%),
+    radial-gradient(85% 48% at 62% 86%, rgba(127, 168, 132, 0.3), rgba(127, 168, 132, 0) 100%),
+    linear-gradient(141deg, #f6f2e9 0%, #e3e6d9 100%);
+}
+/* Security keeps its near-black ground. Its accent is the app's one red (#E0736B), not sage;
+   the support line under the headline is white. */
+.cr-g-black {
+  position: relative;
+  --h: #ffffff; --acc: #e0736b; --sub: #ffffff; --txt: rgba(255, 255, 255, 0.72); --line: rgba(246, 242, 233, 0.14); --shadow: var(--lift-dark);
+  color: #ffffff; background: #0b120e;
+}
+.cr-g-emerald .cr-glow, .cr-g-emerald .cr-hero-glow { display: none; }
+
+/* Headlines: Cabinet Grotesk Black, lower case, two parts. */
+.cr-site .cr-h2, .cr-site .cr-hero-title {
+  margin: 0; font-family: var(--display); font-weight: 900; letter-spacing: -0.01em; color: var(--h, var(--deep));
+  max-width: none; text-wrap: balance;
+}
+.cr-site .cr-h2 { font-size: clamp(42px, 5.2vw, 76px); line-height: 1.02; }
+.cr-site .cr-hero-title { font-size: clamp(48px, 5.8vw, 84px); line-height: 0.98; animation: cr-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+/* "run your / whole org / from one app.": line one always breaks after "your". */
+.cr-hero-title .cr-l1 { max-width: 5.2em; }
+/* The paragraph under the headline is white, and stops well short of the card wall,
+   which starts at the middle of the page. */
+.cr-site .cr-hero .cr-hero-lead { color: #ffffff; }
+@media (min-width: 761px) {
+  .cr-site .cr-hero .cr-hero-lead { max-width: min(520px, calc(50vw - 96px)); }
+}
+.cr-l1, .cr-l2 { display: block; }
+.cr-site .cr-l2 { color: var(--acc, var(--sage)); }
+.cr-site .cr-sub, .cr-site .cr-hero-lead { font-weight: 700; color: var(--sub, var(--sage)); font-size: clamp(19px, 1.5vw, 21px); line-height: 1.45; max-width: 620px; }
+.cr-site .cr-hero-note { color: var(--txt); }
+.cr-site .cr-head { gap: 22px; }
+
+/* Nav: emerald glass with the lockup. */
+.cr-site .cr-nav-bar, .cr-site .cr-nav-menu { background: rgba(18, 58, 46, 0.86); border-color: rgba(246, 242, 233, 0.12); box-shadow: 0 12px 36px rgba(6, 24, 17, 0.3); }
+.cr-site .cr-nav-menu { background: rgba(18, 58, 46, 0.96); }
+.cr-brand .cr-lockup { display: block; width: auto; height: 24px; border-radius: 0; }
+
+/* Buttons: the app's pill. */
+.cr-site .cr-btn { height: 56px; padding: 0 28px; border-radius: 999px; font-weight: 700; }
+.cr-site .cr-nav-links a.cr-nav-cta { font-weight: 700; }
+
+/* Hero: the overview graphic. Text left; a wall of real cards right, running off the edges. */
+.cr-site .cr-hero { background-color: var(--deep); }
+.cr-hero-in { min-height: 860px; box-sizing: border-box; }
+.cr-hero-copy { flex: 0 1 620px; position: relative; z-index: 2; }
+.cr-hero-wall { position: absolute; z-index: 1; top: 0; bottom: 0; left: 50%; right: -80px; display: flex; gap: 22px; pointer-events: none;
+  /* The wall melts into the ground at the top, the bottom and its left edge. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%), linear-gradient(to right, transparent 0, #000 9%);
+  -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%), linear-gradient(to right, transparent 0, #000 9%);
+  mask-composite: intersect; }
+/* Parallax, kept quiet: each column scrolls at a slightly different speed (--rate), nothing more.
+   HeroParallax writes --sy (scroll, px) on the hero. */
+.cr-hero-col {
+  --base: 40px; --rate: 0.06;
+  flex: 1 1 0; min-width: 0; overflow: visible; will-change: transform;
+  transform: translate3d(0, calc(var(--base) - var(--sy, 0px) * var(--rate)), 0);
+  animation: cr-fade 1.4s ease both; animation-delay: calc(var(--c) * 180ms + 200ms);
+}
+.cr-hero-col:nth-child(2) { --base: -140px; --rate: 0.03; }
+.cr-hero-col:nth-child(3) { --base: -50px; --rate: 0.09; }
+.cr-hero-track { display: flex; flex-direction: column; gap: 22px; animation: cr-drift 300s linear infinite; }
+.cr-hero-col:nth-child(2) .cr-hero-track { animation-duration: 360s; animation-direction: reverse; }
+.cr-hero-col:nth-child(3) .cr-hero-track { animation-duration: 330s; }
+.cr-hero-track img { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: var(--lift-dark); }
+/* Columns drift in opposite directions, slowly, so the app reads as alive. */
+.cr-hero-track img[data-dark] { box-shadow: var(--lift-dark), 0 0 0 1px rgba(255, 255, 255, 0.16); }
+@keyframes cr-drift { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 11px)); } }
+.cr-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Showcase: tabs as floating cards, the stage on the opposite ground. */
+.cr-site .cr-tab-title { font-weight: 900; letter-spacing: -0.01em; }
+.cr-g-ivory .cr-tab { background: rgba(255, 255, 255, 0.45); border-color: rgba(18, 58, 46, 0.08); color: var(--deep); }
+.cr-g-ivory .cr-tab[aria-selected="true"] { background: #ffffff; border-color: #ffffff; box-shadow: var(--lift); }
+.cr-g-ivory .cr-tab-line { color: rgba(18, 58, 46, 0.8); }
+.cr-g-ivory .cr-tab[aria-selected="false"]:hover { border-color: rgba(18, 58, 46, 0.2); }
+.cr-g-emerald .cr-tab { background: rgba(255, 255, 255, 0.06); border-color: rgba(246, 242, 233, 0.14); color: var(--cream); }
+.cr-g-emerald .cr-tab[aria-selected="true"] { background: var(--cream); border-color: var(--cream); color: var(--deep); box-shadow: var(--lift-dark); }
+.cr-g-emerald .cr-tab-line { color: rgba(18, 58, 46, 0.8); }
+.cr-g-emerald .cr-tab[aria-selected="false"]:hover { border-color: rgba(246, 242, 233, 0.32); background: rgba(255, 255, 255, 0.1); }
+.cr-site .cr-tab-bar { background: var(--sage-light); }
+.cr-g-ivory .cr-tab-bar { background: var(--sage); }
+.cr-g-black .cr-tab-bar { background: var(--acc); }
+/* Chats and feeds: the line under the headline is white, like the hero's. */
+.cr-site #talk { --sub: #ffffff; }
+.cr-site .cr-stage { border-radius: 28px; box-shadow: var(--shadow); }
+/* One gradient at a time: the section's ground carries it, so whatever sits on it is flat. */
+.cr-g-ivory .cr-stage { background: #123a2e; }
+.cr-g-ivory .cr-stage-glow { display: none; }
+.cr-g-emerald .cr-stage { background: #f6f2e9; }
+.cr-g-emerald .cr-stage-glow { display: none; }
+.cr-site .cr-caption { color: var(--txt); }
+
+/* Security: the black panel stays, flat; captions take the headline type. */
+.cr-site .cr-tline-line { background: rgba(18, 58, 46, 0.2); }
+.cr-site .cr-ladder-rail > div { background: rgba(246, 242, 233, 0.35); }
+.cr-site .cr-sec-glow { display: none; }
+.cr-site .cr-still > div { border-radius: 22px; box-shadow: var(--shadow), 0 0 0 1px rgba(255, 255, 255, 0.16); }
+.cr-site .cr-still b { color: var(--h); font-weight: 900; }
+.cr-site .cr-still span { color: var(--txt); }
+
+/* Captions under media read in the ground's colours. */
+.cr-site .cr-cap b { color: var(--h, var(--deep)); font-weight: 900; }
+.cr-site .cr-cap span { color: var(--txt, var(--navy)); }
+
+/* Chats and feeds on emerald. */
+.cr-g-emerald .cr-cf-media { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(246, 242, 233, 0.1); border-radius: 28px; }
+
+/* Roles and groups, launch: the emerald ground replaces their flat green. */
+.cr-site .cr-hier, .cr-site .cr-launch { background-color: var(--deep); }
+.cr-site .cr-hier-title b { font-weight: 900; }
+.cr-site .cr-rung span { font-weight: 900; }
+
+/* Setup and officer tools on ivory: floating cards, no outlines. */
+.cr-site .cr-step-clip { border-radius: 26px; box-shadow: var(--lift); }
+.cr-site .cr-step-dot { box-shadow: 0 0 0 5px #f2f0e6; }
+.cr-site .cr-step-time { background: #f2f0e6; color: var(--deep); }
+.cr-site .cr-tile { background: #ffffff; border: 0; border-radius: 26px; box-shadow: var(--lift); }
+.cr-site .cr-tile:hover { box-shadow: 0 2px 6px rgba(6, 24, 17, 0.08), 0 34px 70px -22px rgba(6, 24, 17, 0.36); }
+.cr-site .cr-tile-clip { border-radius: 16px; box-shadow: none; }
+
+/* Waiting room card. */
+.cr-site .cr-cta h2 { font-weight: 900; letter-spacing: -0.01em; }
+.cr-site .cr-cta { border-radius: 28px; }
+.cr-site .cr-submit { border-radius: 999px; }
+.cr-site .cr-field input { border-radius: 14px; }
+
+/* Footer on emerald, with the lockup. */
+/* Near-black, so it never repeats the emerald of the section above it. */
+.cr-site .cr-footer { background: #0b120e; border-top: 1px solid rgba(246, 242, 233, 0.08); }
+.cr-site .cr-footer-in, .cr-site .cr-footer a { color: rgba(246, 242, 233, 0.75); }
+.cr-site .cr-footer a:hover { color: var(--cream); }
+.cr-footer-brand .cr-lockup { display: block; width: auto; height: 22px; }
+.cr-footer-brand > span { color: var(--sage-light); font-weight: 700; }
+
+@media (max-width: 1100px) {
+  .cr-hero-wall { left: 54%; right: -160px; }
+}
+@media (max-width: 760px) {
+  .cr-site .cr-hero-title { font-size: 48px; }
+  .cr-site .cr-h2 { font-size: 40px; }
+  .cr-site .cr-hero { display: flex; flex-direction: column; }
+  .cr-hero-in { min-height: 0; padding-bottom: 0; }
+  .cr-hero-wall { order: 2; margin-bottom: -40px !important; }
+  .cr-hero-wall { position: relative; top: auto; bottom: auto; left: auto; right: auto; height: 520px; margin: 40px -24px 0 -24px; gap: 12px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-image: linear-gradient(to bottom, #000 70%, transparent); }
+  .cr-hero-col { --base: 0px; --rate: 0.025; }
+  .cr-hero-col:nth-child(2) { --base: -60px; --rate: 0.05; }
+  .cr-hero-col:nth-child(3) { display: none; }
+  .cr-hero-track { gap: 12px; }
+  .cr-hero-track img { border-radius: 13px; }
+}
+
+/* ── Splash ────────────────────────────────────────────────────────────────────
+   0 to 1.1 s: the logo writes itself on in the middle (the SVG animates itself).
+   1.3 to 1.95 s: it flies up into the nav logo's spot while the emerald ground fades,
+   then the nav logo takes over in the same place. Timed in CSS from the first paint.
+   The landing spot follows the nav: 16 px page gutter, a 1120 px bar centred, its 1 px border
+   and 22 px left padding (14 px on phones); 32 px from the top; the lockup is 24 px tall. */
+.cr-splash { position: fixed; inset: 0; z-index: 60; pointer-events: auto;
+  --w0: clamp(264px, 40vw, 520px);
+  --lx: calc(16px + max(0px, (100% - 1152px) / 2) + 23px); --ly: 32px; --lw: 155.68px;
+  animation: cr-splash-done 0s linear 1.95s both; }
+/* Flat emerald, because the logo carries the gradient. */
+.cr-splash-ground { position: absolute; inset: 0; background: #123a2e; animation: cr-splash-ground 0.6s ease 1.33s both; }
+.cr-splash-logo { position: absolute; display: block; height: auto; max-width: none;
+  animation: cr-splash-fly 0.65s cubic-bezier(0.7, 0, 0.2, 1) 1.3s both; }
+@keyframes cr-splash-fly {
+  from { left: calc(50% - var(--w0) / 2); top: calc(50% - var(--w0) * 0.0767); width: var(--w0); }
+  to { left: var(--lx); top: var(--ly); width: var(--lw); }
+}
+@keyframes cr-splash-ground { to { opacity: 0; } }
+@keyframes cr-splash-done { to { visibility: hidden; } }
+@keyframes cr-splash-wait { from { opacity: 0; } to { opacity: 1; } }
+/* Arriving from another page of the site: no splash (Splash.tsx sets data-splash="skip"). */
+html[data-splash="skip"] .cr-splash { display: none !important; }
+/* The nav's own logo waits until the flying one lands on it. */
+html:not([data-splash="skip"]) .cr-splash ~ .cr-nav .cr-lockup { animation: cr-splash-wait 0s linear 1.95s both; }
+/* The hero comes in as the ground fades, once the logo has flown past the headline. */
+html:not([data-splash="skip"]) .cr-site .cr-splash ~ main .cr-hero-title { animation-delay: 1.57s; animation-fill-mode: both; }
+html:not([data-splash="skip"]) .cr-splash ~ main .cr-hero-lead,
+html:not([data-splash="skip"]) .cr-splash ~ main .cr-hero-actions,
+html:not([data-splash="skip"]) .cr-splash ~ main .cr-hero-note { animation: cr-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.65s both; }
+html:not([data-splash="skip"]) .cr-splash ~ main .cr-hero-actions { animation-delay: 1.72s; }
+html:not([data-splash="skip"]) .cr-splash ~ main .cr-hero-note { animation-delay: 1.78s; }
+html:not([data-splash="skip"]) .cr-splash ~ main .cr-hero-col { animation-delay: calc(var(--c) * 160ms + 1.45s); }
+@media (max-width: 760px) {
+  .cr-splash { --lx: 31px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cr-splash { display: none !important; }
+}
+
+/* ── Setup and officer tools as graphics ─────────────────────────────────────
+   A flat emerald panel (the section's ivory carries the gradient), real app cards straight and
+   lifted, short labels in the brand type. Like the Instagram posts. */
+.cr-gfx { position: relative; border-radius: 28px; background: #123a2e; color: #f6f2e9; padding: clamp(24px, 4vw, 56px); overflow: hidden; }
+.cr-gfx-card { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: var(--lift-dark); }
+
+/* Night one: the real onboarding pages, all one size, straight on the ivory with a timeline over them. */
+.cr-gfx-steps { position: relative; }
+.cr-gfx-steps ol { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.cr-gfx-line { position: absolute; left: 7px; right: 0; top: 6px; height: 2px; background: rgba(18, 58, 46, 0.16); }
+.cr-gfx-steps li { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+/* The dot sits on the line; the time sits under it, clear of the line. */
+.cr-gfx-when { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 8px; font-weight: 700; font-size: 15px; line-height: 1; color: #4e7a54; }
+.cr-gfx-dot { width: 14px; height: 14px; border-radius: 50%; background: #123a2e; box-shadow: 0 0 0 5px #eeeee4; }
+.cr-gfx-steps li:last-child .cr-gfx-dot { background: #4e7a54; }
+.cr-gfx-steps b { font-family: var(--display); font-weight: 900; font-size: clamp(21px, 1.9vw, 26px); line-height: 1.15; letter-spacing: -0.01em; color: #123a2e; }
+.cr-gfx-line-text { font-size: 16px; line-height: 1.45; color: rgba(18, 58, 46, 0.8); min-height: 2.9em; }
+.cr-gfx-screen { display: block; width: 100%; max-width: 320px; height: auto; margin-top: 22px; border-radius: clamp(28px, 3vw, 40px); box-shadow: var(--lift); }
+
+/* Officer tools: six tiles, all one size, three to a row. Hover plays the clip on a computer. */
+.cr-ot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 32px); }
+.cr-ot-tile { margin: 0; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.cr-ot-media { aspect-ratio: 600 / 574; overflow: hidden; border-radius: 20px; background: #ffffff; box-shadow: var(--lift-dark); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.cr-ot-media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cr-ot-tile figcaption { display: flex; flex-direction: column; gap: 4px; }
+.cr-ot-tile b { font-family: var(--display); font-weight: 900; font-size: clamp(19px, 1.6vw, 22px); line-height: 1.2; letter-spacing: -0.01em; color: #f6f2e9; }
+.cr-ot-tile span { font-size: 15px; line-height: 1.45; color: rgba(246, 242, 233, 0.75); }
+.cr-ot-hint { display: none; margin: 0; font-size: 14px; font-weight: 600; color: rgba(18, 58, 46, 0.6); }
+@media (hover: hover) and (pointer: fine) {
+  .cr-ot-hint { display: block; }
+  .cr-ot-tile:hover .cr-ot-media { transform: translateY(-6px); }
+}
+@media (max-width: 1000px) {
+  .cr-ot { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .cr-gfx { border-radius: 22px; }
+  .cr-gfx-steps ol { grid-template-columns: 1fr; gap: 36px; }
+  .cr-gfx-line { display: none; }
+  .cr-gfx-line-text { min-height: 0; }
+  .cr-ot { grid-template-columns: minmax(0, 1fr); }
+  .cr-ot-tile:nth-child(n + 5) { display: none; }
+}
+
+/* ── Launch map as a graphic ─────────────────────────────────────────────────
+   A flat cream panel on the emerald ground (the opposite ground, like the stages), a fine emerald dot
+   grid, and the launch campuses pinned with labels that always show. The form sits below it. */
+.cr-site .cr-mapwrap { width: 100%; left: auto; translate: none; box-sizing: border-box; padding: clamp(20px, 3vw, 44px); border-radius: 28px; background: #f6f2e9; box-shadow: var(--lift-dark); }
+.cr-site .cr-map .ring { stroke: #123a2e; }
+.cr-site .cr-map .cp:hover .cd, .cr-site .cr-map .cp:focus-visible .cd { fill: #123a2e; }
+.cr-site .cr-map .tip.on { opacity: 1; transform: none; }
+.cr-site .cr-map .tip rect { filter: drop-shadow(0 6px 14px rgba(6, 24, 17, 0.22)); }
+.cr-site .cr-launch .cr-cta { margin-top: 16px; box-shadow: var(--lift-dark); }
+
+/* ── Launch as one graphic ───────────────────────────────────────────────────
+   A cream panel on the emerald ground holds everything, like a poster: the headline and a compact
+   waiting room card on the left, the map large on the right with nothing covering it. */
+.cr-launch-gfx {
+  --h: #123a2e; --acc: #4e7a54; --sub: #4e7a54; --txt: rgba(18, 58, 46, 0.8);
+  --pad: clamp(28px, 4vw, 56px);
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 32px;
+  padding: var(--pad); border-radius: 28px; color: #123a2e; box-shadow: var(--lift-dark); overflow: hidden;
+  /* The ivory ground's gradient; the section behind it is flat emerald, so the two don't stack. */
+  background:
+    radial-gradient(75% 40% at 8% 2%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 100%),
+    radial-gradient(85% 48% at 62% 86%, rgba(127, 168, 132, 0.3), rgba(127, 168, 132, 0) 100%),
+    linear-gradient(141deg, #f6f2e9 0%, #e3e6d9 100%);
+}
+.cr-site .cr-launch.cr-g-emerald { background: #123a2e; }
+.cr-launch-map { display: flex; flex-direction: column; gap: 8px; }
+.cr-site .cr-launch-gfx .cr-mapwrap { padding: 0; border-radius: 0; background: none; box-shadow: none; }
+.cr-site .cr-launch-gfx .cr-map-hint { margin: 0; color: rgba(18, 58, 46, 0.6); }
+.cr-site .cr-launch-gfx .cr-cta { width: 100%; margin: 0; padding: clamp(24px, 2.4vw, 32px); background: #ffffff; box-shadow: var(--lift); }
+.cr-site .cr-launch-gfx .cr-cta h2 { font-size: clamp(28px, 2.6vw, 36px); }
+.cr-site .cr-launch .cr-launch-gfx .cr-sub { max-width: 480px; }
+@media (min-width: 1101px) {
+  /* Wider than the other sections, so the map can be big with nothing over it: the headline and a
+     compact waiting room card on the left, the whole map clear on the right. */
+  .cr-launch-gfx { width: min(1360px, calc(100vw - 48px)); margin-left: 50%; translate: -50% 0; box-sizing: border-box;
+    grid-template-columns: 420px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: clamp(28px, 3vw, 48px); align-content: center; }
+  .cr-launch-head { grid-area: 1 / 1 / 2 / 2; }
+  .cr-site .cr-launch-gfx .cr-launch-head .cr-h2 { font-size: clamp(52px, 4.6vw, 64px); }
+  .cr-launch-map { grid-area: 1 / 2 / 3 / 3; align-self: center; margin-right: calc(-0.5 * var(--pad)); }
+  .cr-site .cr-launch-gfx .cr-map-hint { text-align: right; padding-right: calc(0.5 * var(--pad)); }
+  /* The waiting room: compact, the four fields two by two, no paragraph (the headline says it). */
+  .cr-site .cr-launch-gfx .cr-cta { grid-area: 2 / 1 / 3 / 2; gap: 18px; padding: 26px 28px; }
+  .cr-site .cr-launch-gfx .cr-cta h2 { font-size: 30px; }
+  .cr-site .cr-launch-gfx .cr-cta-lead { display: none; }
+  .cr-launch-gfx .cr-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .cr-launch-gfx .cr-field { font-size: 13px; }
+  .cr-launch-gfx .cr-field input { height: 46px; padding: 0 14px; font-size: 15px; }
+  .cr-launch-gfx .cr-school-msg, .cr-launch-gfx .cr-form-error, .cr-launch-gfx .cr-submit { grid-column: 1 / -1; }
+  .cr-launch-gfx .cr-submit { height: 48px; font-size: 16px; }
+}
+@media (max-width: 760px) {
+  .cr-launch-gfx { border-radius: 22px; row-gap: 24px; }
+}
+
+/* ── Hero polish ───────────────────────────────────────────────────────────────
+   Fills the first screen; the wall is two columns of larger cards, fully opaque, with clean side
+   edges (no half-faded cards), fading only where it meets the nav and the bottom of the screen.
+   The third column comes back on very wide screens. The paragraph is lighter. */
+@media (min-width: 761px) {
+  /* The hero starts 14px above the top of the screen (it slides up under the 74px nav by 88px),
+     so it is the screen's height plus 14px, ending exactly at the bottom of the first screen. */
+  .cr-hero-in { min-height: clamp(760px, calc(100svh + 14px), 1094px); }
+  .cr-hero-wall { left: 54%; right: 56px; gap: 24px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 20%, #000 82%, transparent 100%); -webkit-mask-composite: source-over;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 20%, #000 82%, transparent 100%); mask-composite: add; }
+  .cr-hero-col:nth-child(3) { display: none; }
+  .cr-hero-track { gap: 24px; }
+  @keyframes cr-drift { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 12px)); } }
+}
+.cr-hero-track img { border-radius: 22px; }
+@media (min-width: 1700px) {
+  .cr-hero-wall { left: 50%; }
+  .cr-hero-col:nth-child(3) { display: block; }
+}
+.cr-site .cr-hero .cr-hero-lead { font-weight: 500; font-size: clamp(18px, 1.4vw, 20px); line-height: 1.55; }
+@media (min-width: 761px) {
+  .cr-site .cr-hero .cr-hero-lead { max-width: min(500px, calc(50vw - 96px)); }
+}
+.cr-hero-copy { gap: 30px; }
+.cr-site .cr-hero-note { font-size: 15px; color: rgba(246, 242, 233, 0.7); }
+@media (min-width: 761px) and (max-width: 1100px) {
+  .cr-hero-wall { left: 56%; right: 24px; }
+}
+
+/* ── Hero wall: free-floating and interactive ──────────────────────────────────
+   No frame: the cards run the full height, fading at the top and bottom. The columns move apart as
+   you scroll. On a computer, hovering a card brings it forward (it lifts, the rest dim, the drift
+   pauses) and shows a label; every card links to the section that shows that feature. */
+@media (min-width: 761px) {
+  .cr-hero-col { --base: 40px; --rate: 0.26; }
+  .cr-hero-col:nth-child(2) { --base: -140px; --rate: 0.06; }
+  .cr-hero-col:nth-child(3) { --base: -50px; --rate: 0.4; }
+}
+@media (max-width: 760px) {
+  .cr-hero-col { --base: 0px; --rate: 0.06; }
+  .cr-hero-col:nth-child(2) { --base: -60px; --rate: 0.14; }
+}
+.cr-hero-wall { pointer-events: auto; }
+.cr-hero-card { position: relative; display: block; border-radius: 22px; -webkit-tap-highlight-color: transparent;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease; }
+.cr-hero-card img { pointer-events: none; }
+.cr-hero-tag { position: absolute; left: 14px; top: -13px; padding: 7px 12px; border-radius: 999px; background: #123a2e; color: #f6f2e9;
+  font-weight: 700; font-size: 13px; line-height: 1; white-space: nowrap; box-shadow: 0 6px 16px rgba(6, 24, 17, 0.35);
+  opacity: 0; transform: translateY(4px); transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .cr-hero-card { cursor: pointer; }
+  .cr-hero-wall:has(.cr-hero-card:hover) .cr-hero-track { animation-play-state: paused; }
+  .cr-hero-wall:has(.cr-hero-card:hover) .cr-hero-card:not(:hover) { opacity: 0.5; }
+  .cr-hero-card:hover { transform: translateY(-6px) scale(1.025); z-index: 1; }
+  .cr-hero-card:hover .cr-hero-tag { opacity: 1; transform: none; }
+}

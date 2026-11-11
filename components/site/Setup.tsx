@@ -1,87 +1,71 @@
-"use client";
+import type { CSSProperties } from "react";
+import OfficerTools from "./OfficerTools";
+import Title from "./Title";
 
-import { useEffect, useState, type CSSProperties } from "react";
-import AutoVideo from "./AutoVideo";
-import { CLIPS } from "./media";
-import { useInView } from "./useAutoTabs";
+// Both halves are graphics in the social kit's style: real app cards, straight and lifted,
+// on a flat emerald panel. Nothing plays in sequence, so the whole thing reads at a glance.
 
-// The three night-one steps play one after another, each for its clip's length plus a beat.
-const STEPS = [
-  { when: "9:00 PM", title: "Start your chapter", line: "Pick your org type, name it and set the roles.", clip: CLIPS.setupStart, alt: "Starting a chapter: name it, set the roles, then Your chapter is live", ms: 10633 },
-  { when: "9:15 PM", title: "Send each role its code", line: "Every role has its own code. It changes every day.", clip: CLIPS.setupCodes, alt: "Invite codes: the New Member code with Share and Copy", ms: 6633 },
-  { when: "10:00 PM", title: "Everyone joins", line: "Type the code and you land in the right role.", clip: CLIPS.setupJoin, alt: "Typing a code and joining Acacia Wisconsin as Exec", ms: 6800 },
+type Card = { file: string; alt: string; w: number; h: number };
+
+// Night one, start to finish in 20 minutes: the real onboarding pages, all the same size.
+const STEPS: { when: string; title: string; line: string; card: Card }[] = [
+  {
+    when: "9:00 PM",
+    title: "Start your chapter",
+    line: "Pick your org type, name it and set the roles.",
+    card: { file: "onb-type", alt: "What kind of org is it? Fraternity, sorority, honor society, professional, club or other", w: 780, h: 1688 },
+  },
+  {
+    when: "9:05 PM",
+    title: "Send each role its code",
+    line: "Every role has its own code. It changes every day.",
+    card: { file: "onb-invite", alt: "Invite your chapter: a code for each role", w: 780, h: 1688 },
+  },
+  {
+    when: "9:20 PM",
+    title: "Everyone joins",
+    line: "Type the code and you land in the right role.",
+    card: { file: "onb-join", alt: "Join with a code: ten seconds and you are in", w: 780, h: 1688 },
+  },
 ];
 
-// Officer tools, equal tiles. Phones show the first three.
-const TILES = [
-  { clip: CLIPS.tileAdmin, alt: "Turning on Admin mode", title: "Tap the shield", line: "Home turns into the Administrator View." },
-  { clip: CLIPS.tileUpcoming, alt: "Activities, then the calendar", title: "What’s coming up", line: "Overdue first, then the week." },
-  { clip: CLIPS.tileExcuses, alt: "Swiping to approve the first excuse, then Undo", title: "Swipe to approve", line: "Excuses, one swipe each. And Undo." },
-  { clip: CLIPS.tilePowers, alt: "Turning on powers for Rush Chair", title: "Powers for every role", line: "Flip on what each officer can do." },
-  { clip: CLIPS.tileReports, alt: "Reports: two waiting on you", title: "Handle reports", line: "Flagged messages and posts, in one place." },
-  { clip: CLIPS.tilePaid, alt: "Who has paid for the Formal Ticket", title: "See who has paid", line: "Every voucher has its own list." },
-];
+const Img = ({ card }: { card: Card }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img className="cr-gfx-card" src={`/kit/${card.file}.webp`} alt={card.alt} width={card.w} height={card.h} loading="lazy" />
+);
 
 export default function Setup() {
-  const [step, setStep] = useState(0);
-  // The timeline waits until it is on screen, and starts from step one each time it comes back.
-  const { ref, inView, visits } = useInView<HTMLDivElement>();
-
-  useEffect(() => {
-    if (visits > 0) setStep(0);
-  }, [visits]);
-
-  useEffect(() => {
-    if (!inView || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setTimeout(() => setStep((s) => (s + 1) % STEPS.length), STEPS[step].ms);
-    return () => clearTimeout(t);
-  }, [step, inView]);
-
   return (
-    <section id="how" className="cr-section" style={{ background: "#FFFFFF" }}>
+    <section id="how" className="cr-section cr-g-ivory">
       <div className="cr-wrap">
         <div className="cr-head" data-reveal>
-          <h2 className="cr-h2">up and running in one night.</h2>
+          <Title text="up and running / in 20 minutes." />
           <p className="cr-sub">Three steps, start to finish.</p>
         </div>
-        <div ref={ref} style={{ position: "relative" }}>
-          <span className="cr-tline-line" aria-hidden="true" />
-          <ol className="cr-tline">
-          {STEPS.map((s, i) => (
-            <li key={s.when} className="cr-step" data-on={i === step} data-reveal style={{ "--i": i } as CSSProperties}>
-              <div className="cr-step-when">
-                <span className="cr-step-dot" aria-hidden="true" />
-                <span className="cr-step-time">{s.when}</span>
-              </div>
-              <div className="cr-step-clip">
-                <AutoVideo clip={s.clip} alt={s.alt} loop={false} playing={inView && i === step} restartKey={`${step}-${visits}`} />
-              </div>
-              <div className="cr-cap">
+        <div className="cr-gfx-steps" data-reveal>
+          <span className="cr-gfx-line" aria-hidden="true" />
+          <ol>
+            {STEPS.map((s, i) => (
+              <li key={s.when} style={{ "--i": i } as CSSProperties}>
+                <span className="cr-gfx-when">
+                  <span className="cr-gfx-dot" aria-hidden="true" />
+                  {s.when}
+                </span>
                 <b>{s.title}</b>
-                <span>{s.line}</span>
-              </div>
-            </li>
-          ))}
+                <span className="cr-gfx-line-text">{s.line}</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="cr-gfx-screen" src={`/kit/${s.card.file}.webp`} alt={s.card.alt} width={s.card.w} height={s.card.h} loading="lazy" />
+              </li>
+            ))}
           </ol>
         </div>
 
         <div id="more" className="cr-more" data-reveal>
-          <h2 className="cr-h2">features that save you hours.</h2>
+          <Title text="officer tools, / built in." />
           <p className="cr-sub">Once everyone’s in, this is what officers stop doing by hand.</p>
+          <p className="cr-ot-hint">Hover over a tile to see it work.</p>
         </div>
-        <div className="cr-tiles">
-          {TILES.map((t, i) => (
-            <figure key={t.title} className="cr-tile" data-reveal style={{ "--i": i % 3 } as CSSProperties}>
-              <div className="cr-tile-clip">
-                <AutoVideo clip={t.clip} alt={t.alt} />
-              </div>
-              <figcaption className="cr-cap">
-                <b>{t.title}</b>
-                <span>{t.line}</span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        <OfficerTools />
       </div>
     </section>
   );
