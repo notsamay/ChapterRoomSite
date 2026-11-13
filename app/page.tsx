@@ -7,7 +7,9 @@ import Reveal from "@/components/site/Reveal";
 import { ChatsAndFeeds, Events, Features, Money } from "@/components/site/Rivers";
 import Security from "@/components/site/Security";
 import Setup from "@/components/site/Setup";
+import ScrollSnap from "@/components/site/ScrollSnap";
 import Splash from "@/components/site/Splash";
+import WebPortal from "@/components/site/WebPortal";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -33,12 +35,14 @@ export default function Home() {
       <main>
         {/* Grounds alternate so no two neighbours share a colour, on every screen size
             (phones hide Chats and feeds, Events and Money):
-            emerald, ivory, emerald, ivory, emerald, ivory, black, ivory, emerald, then the black footer. */}
+            emerald, ivory, emerald, ivory, emerald, ivory, emerald, black, ivory, black, emerald, then the black footer.
+            The web portal follows Roles: it's where officers use those same role powers from a laptop. */}
         <Hero />
         <Features />
         <ChatsAndFeeds />
         <Events />
         <Hierarchy />
+        <WebPortal />
         <Money />
         <Security />
         <Setup />
@@ -46,6 +50,7 @@ export default function Home() {
       </main>
       <SiteFooter />
       <Reveal />
+      <ScrollSnap />
     </div>
   );
 }

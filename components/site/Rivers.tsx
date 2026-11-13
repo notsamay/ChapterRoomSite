@@ -1,6 +1,3 @@
-import type { CSSProperties } from "react";
-import Phone from "./Phone";
-import Title from "./Title";
 import Showcase, { type ShowcaseTab } from "./Showcase";
 import { CLIPS } from "./media";
 
@@ -76,6 +73,7 @@ export function Features() {
       subtitle="Real recordings of the app, running on a sample chapter. Pick one, or let it play."
       tabs={FEATURES}
       phoneGrid
+      flip
     />
   );
 }
@@ -101,37 +99,12 @@ export function Money() {
       title="membership fees, / without the chase."
       subtitle="Members pay in the app or split membership fees into a payment plan. Payments run through Stripe, and the money goes to your chapter’s own account."
       tabs={MONEY}
+      flip
       hideOnPhone
-      ground="ivory"
+      ground="emerald"
     />
   );
 }
 
-/** Desktop only: on phones the Messages tab already covers this. */
-export function ChatsAndFeeds() {
-  const card = (clip: typeof CLIPS.chat, title: string, line: string, alt: string, i: number) => (
-    <figure data-reveal style={{ "--i": i } as CSSProperties}>
-      <div className="cr-cf-media">
-        <Phone clip={clip} alt={alt} width={270} />
-      </div>
-      <figcaption className="cr-cap">
-        <b>{title}</b>
-        <span>{line}</span>
-      </figcaption>
-    </figure>
-  );
-  return (
-    <section id="talk" className="cr-section cr-g-emerald cr-hide-phone">
-      <div className="cr-wrap">
-        <div className="cr-head" data-reveal>
-          <Title text="every conversation, / in one place." />
-          <p className="cr-sub">Chats are for talking. Feeds are for what everyone needs to see.</p>
-        </div>
-        <div className="cr-cf">
-          {card(CLIPS.chat, "Chats", "One for the whole org, one for every group in it, and chats with other orgs on campus.", "A chapter chat with typing, new messages and a double-tap heart", 0)}
-          {card(CLIPS.feed, "Feeds", "Announcements that don’t get buried. You pick who posts and who reads, with replies on or broadcast only.", "Posting to Announcements as reactions come in", 1)}
-        </div>
-      </div>
-    </section>
-  );
-}
+/** Chats and feeds: its own layout, in Talk.tsx. Desktop only. */
+export { default as ChatsAndFeeds } from "./Talk";

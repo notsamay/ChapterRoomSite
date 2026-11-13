@@ -35,7 +35,7 @@ const description =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Chapter Room — Run your whole org from one app",
+    default: "Chapter Room — Run your whole org from one place",
     template: "%s · Chapter Room",
   },
   description,
@@ -55,13 +55,13 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Chapter Room",
-    title: "Chapter Room — Run your whole org from one app",
+    title: "Chapter Room — Run your whole org from one place",
     description,
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "Chapter Room" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chapter Room — Run your whole org from one app",
+    title: "Chapter Room — Run your whole org from one place",
     description,
     images: ["/og.png"],
   },

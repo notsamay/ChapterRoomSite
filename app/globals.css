@@ -11,8 +11,8 @@
 
 html {
   scroll-behavior: smooth;
-  /* Keep anchor targets clear of the floating nav. */
-  scroll-padding-top: 96px;
+  /* The nav hides while you scroll down, so sections line up with the very top of the screen. */
+  scroll-padding-top: 0;
   background: #123a2e;
 }
 

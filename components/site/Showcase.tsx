@@ -85,18 +85,23 @@ export default function Showcase({
   );
 
   return (
-    <section ref={ref} id={id} className={`cr-section cr-g-${ground}${hideOnPhone ? " cr-hide-phone" : ""}`}>
+    <section ref={ref} id={id} className={`cr-section cr-page cr-g-${ground}${hideOnPhone ? " cr-hide-phone" : ""}`}>
       <div className="cr-wrap">
-        <div className="cr-head" data-reveal>
-          <Title text={title} />
-          <p className="cr-sub">{subtitle}</p>
-        </div>
-        <div className="cr-show" data-reveal>
-          {flip ? stage : list}
-          {flip ? list : stage}
-          <p key={current} className="cr-caption">
-            {tab.caption ?? tab.line}
-          </p>
+        {/* One screen: the headline and tabs on one side, the recording on the other. */}
+        <div className="cr-split" data-flip={flip ? "" : undefined}>
+          <div className="cr-split-l">
+            <div className="cr-head" data-reveal>
+              <Title text={title} />
+              <p className="cr-sub">{subtitle}</p>
+            </div>
+            <div data-reveal>{list}</div>
+          </div>
+          <div className="cr-split-r" data-reveal>
+            {stage}
+            <p key={current} className="cr-caption">
+              {tab.caption ?? tab.line}
+            </p>
+          </div>
         </div>
         {children}
       </div>

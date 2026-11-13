@@ -96,7 +96,7 @@ function LaunchMap() {
 
 export default function Launch() {
   return (
-    <section id="launch" className="cr-launch cr-g-emerald cr-on-dark">
+    <section id="launch" className="cr-launch cr-page cr-g-emerald cr-on-dark">
       <div className="cr-launch-in">
         {/* One graphic: a cream panel holding the headline, the waiting room and the map. */}
         <div className="cr-launch-gfx">

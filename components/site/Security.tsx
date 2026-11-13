@@ -2,7 +2,7 @@
 
 import Phone from "./Phone";
 import Title from "./Title";
-import { CLIPS, STILLS } from "./media";
+import { CLIPS } from "./media";
 import { useAutoTabs, useInView } from "./useAutoTabs";
 
 const LEVELS = [
@@ -36,67 +36,45 @@ export default function Security() {
   const level = LEVELS[current];
 
   return (
-    <section ref={ref} id="security" className="cr-section cr-g-black cr-on-dark">
-      <div className="cr-wrap">
-        <div className="cr-head" data-reveal>
-          <Title text="what’s said in the room / stays in the room." />
-          <p className="cr-sub">
-            Every chat, feed and album has its own security level. Officers pick Off, Medium or Max, and everyone in
-            the space sees the level at the top of it.
-          </p>
-        </div>
-        <div className="cr-sec-panel" data-reveal>
-          <div className="cr-sec-glow" aria-hidden="true" />
-          <div className="cr-sec-row">
-            <div role="tablist" aria-label="Security levels" className="cr-tabs cr-tabs-dark cr-tabs-scroll">
-              {LEVELS.map((l, i) => {
-                const on = i === current;
-                return (
-                  <button key={l.title} type="button" role="tab" aria-selected={on} onClick={() => pick(i)} className="cr-tab">
-                    <span className="cr-tab-title">{l.title}</span>
-                    {on && (
-                      <>
-                        <span className="cr-tab-line">{l.line}</span>
-                        <span
-                          key={`${current}-${stopped}-${visits}`}
-                          aria-hidden="true"
-                          className="cr-tab-bar"
-                          style={{
-                            animationDuration: stopped ? "0s" : `${l.ms / 1000}s`,
-                            animationPlayState: inView || stopped ? "running" : "paused",
-                          }}
-                        />
-                      </>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-            <div className="cr-sec-stage">
-              <Phone key={`${current}-${visits}`} clip={level.clip} alt={level.alt} width={345} animate />
-            </div>
+    <section ref={ref} id="security" className="cr-section cr-page cr-g-black cr-on-dark">
+      <div className="cr-wrap cr-split">
+        <div className="cr-split-l">
+          <div className="cr-head" data-reveal>
+            <Title text="what’s said in the room / stays in the room." />
+            <p className="cr-sub">
+              Every chat, feed and album has its own security level. Officers pick Off, Medium or Max, and everyone in
+              the space sees the level at the top of it.
+            </p>
           </div>
-          <div className="cr-stills cr-hide-phone">
-            <figure className="cr-still">
-              <div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={STILLS.screenshotLog} alt="Officers see who took it" loading="lazy" />
-              </div>
-              <figcaption>
-                <b>Officers see who took it</b>
-                <span>Every screenshot is in the security log: who, when, where, and what was on their screen.</span>
-              </figcaption>
-            </figure>
-            <figure className="cr-still">
-              <div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={STILLS.recordingBlur} alt="Screen recordings blur" loading="lazy" />
-              </div>
-              <figcaption>
-                <b>Screen recordings blur</b>
-                <span>The moment a recording starts, the chat blurs and a banner says it is being logged.</span>
-              </figcaption>
-            </figure>
+          <div role="tablist" aria-label="Security levels" className="cr-tabs cr-tabs-dark cr-tabs-scroll" data-reveal>
+            {LEVELS.map((l, i) => {
+              const on = i === current;
+              return (
+                <button key={l.title} type="button" role="tab" aria-selected={on} onClick={() => pick(i)} className="cr-tab">
+                  <span className="cr-tab-title">{l.title}</span>
+                  {on && (
+                    <>
+                      <span className="cr-tab-line">{l.line}</span>
+                      <span
+                        key={`${current}-${stopped}-${visits}`}
+                        aria-hidden="true"
+                        className="cr-tab-bar"
+                        style={{
+                          animationDuration: stopped ? "0s" : `${l.ms / 1000}s`,
+                          animationPlayState: inView || stopped ? "running" : "paused",
+                        }}
+                      />
+                    </>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="cr-sec-panel cr-split-r" data-reveal>
+          <div className="cr-sec-glow" aria-hidden="true" />
+          <div className="cr-sec-stage">
+            <Phone key={`${current}-${visits}`} clip={level.clip} alt={level.alt} width={345} animate />
           </div>
         </div>
       </div>
