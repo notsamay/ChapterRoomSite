@@ -8,3 +8,4 @@ out
 
 # Raw screenshot drops; the site uses public/screens/
 *.zip
+!.env.production
